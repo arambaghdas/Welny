@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <include layout="@layout/top_view"
+            android:id="@+id/fy_top_view"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ly_phone_number_view"
+            android:layout_marginTop="53dp"
+            android:layout_below="@id/fy_top_view">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_round_corner_gray"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/ed_phone_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:inputType="number"
+                        android:maxLength="5"
+                        android:imeOptions="actionNext"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:hint="@string/input_code"
+                        android:textColor="@color/colorTextColorHeader"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="10dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_phone_code_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextColorHeader"
+                android:text="@string/code"
+                android:background="@android:color/white"
+                android:layout_marginStart="27dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textSize="14sp"
+                android:layout_marginLeft="27dp" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_phone_response"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ly_phone_number_view"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:lineSpacingExtra="6sp"
+            android:visibility="gone"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/tv_get_code"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:visibility="gone"
+            android:layout_below="@+id/tv_phone_response"
+            android:background="@drawable/bg_disable_round_corner"
+            android:gravity="center"/>
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="46dp"
+            android:id="@+id/pb_loading"
+            android:theme="@style/progressBarWhite"
+            android:layout_below="@+id/tv_phone_response"
+            android:visibility="gone"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_verify_code_descr"
+            android:layout_below="@+id/tv_get_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColorDescr"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:lineSpacingExtra="6sp"
+            android:textColorLink="@color/colorEnableColor"
+            android:textSize="14sp"/>
+
+    </RelativeLayout>
+</ScrollView>

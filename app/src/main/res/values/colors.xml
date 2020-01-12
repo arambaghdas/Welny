@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2B140E</color>
+    <color name="colorLight">#3C2821</color>
+    <color name="colorLightBackground">#3D1A07</color>
+    <color name="colorLightMenuBackground">#46261B</color>
+    <color name="colorLightAboutBackground">#30160D</color>
+    <color name="colorPrimaryDark">#2B140E</color>
+    <color name="colorPrimaryAlpha">#893a160d</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorIconGray">#979797</color>
+    <color name="colorGray">#5F6062</color>
+    <color name="colorGrayHeader">#888888</color>
+    <color name="colorLightGray">#32263238</color>
+    <color name="colorDarkGray">#8a000000</color>
+    <color name="colorEnableColor">#E08524</color>
+    <color name="colorDisableColor">#50eD8664</color>
+    <color name="colorTextColorHeader">#263238</color>
+    <color name="colorTextColorDescr">#2B140E</color>
+    <color name="colorTextVersion">#50FFFFFF</color>
+
+</resources>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl_banner">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/try_welny" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_header1"
+            android:textSize="20sp"
+            android:lineSpacingExtra="6sp"
+            android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/try_welny_header" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_banner"
+        android:layout_above="@+id/tv_order_title"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ly_header2"
+                android:layout_marginTop="18dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp">
+
+                <ImageView
+                    android:id="@+id/iv_dot2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_massage_ico" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_header2"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4sp"
+                    android:layout_marginStart="33dp"
+                    android:layout_marginLeft="33dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    tools:text="@string/try_welny_header1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ly_header3"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp"
+                android:layout_below="@+id/ly_header2">
+
+                <ImageView
+                    android:id="@+id/iv_dot3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_pig_ico" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_header3"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4sp"
+                    android:layout_marginStart="33dp"
+                    android:layout_marginLeft="33dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/try_welny_header2" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ly_header4"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp"
+                android:layout_below="@+id/ly_header3">
+
+                <ImageView
+                    android:id="@+id/iv_dot4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_time_ico" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_header4"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4sp"
+                    android:layout_marginStart="33dp"
+                    android:layout_marginLeft="33dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/try_welny_header3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ly_header5"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp"
+                android:layout_below="@+id/ly_header4">
+
+                <ImageView
+                    android:id="@+id/iv_dot5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_info_ico" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_header5"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4sp"
+                    android:layout_marginStart="33dp"
+                    android:layout_marginLeft="33dp"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/try_welny_header4" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_order_title"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:lineSpacingExtra="4sp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_above="@+id/tv_descr"
+        android:text="@string/try_welny_header5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_descr"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:lineSpacingExtra="4sp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_above="@+id/tv_order"
+        android:layout_marginBottom="16dp"
+        android:text="@string/try_welny_header6"  />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/order"
+        android:id="@+id/tv_order"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_enable_round_corner"
+        android:gravity="center"/>
+
+</RelativeLayout>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_banner">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/invite_friend_banner" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_header"
+                android:textSize="20sp"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@android:color/white"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/invite_friend_header" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_header1"
+            android:textSize="18sp"
+            android:textColor="@color/colorDarkGray"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:lineSpacingExtra="4sp"
+            android:layout_below="@+id/rl_banner"
+            android:layout_marginTop="32dp"
+            android:text="@string/invite_friend_header1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/invite_dotted_bgr"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="32dp"
+            android:id="@+id/ly_header"
+            android:layout_below="@+id/tv_header1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_header2"
+                android:textSize="18sp"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="22dp"
+                android:text="@string/invite_friend_header" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_header3"
+                android:textSize="36sp"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_gravity="center"
+                tools:text="aux1q" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_header4"
+            android:layout_below="@+id/ly_header"
+            android:textSize="14sp"
+            android:lineSpacingExtra="6sp"
+            android:textColor="@color/colorGrayHeader"
+            android:layout_marginTop="62dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            tools:text="@string/invite_friend_header2" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/invite_friend"
+            android:id="@+id/tv_invite_friend"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_enable_round_corner"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+
+</ScrollView>

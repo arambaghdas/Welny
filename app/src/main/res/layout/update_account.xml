@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_banner">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_account" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_header"
+                android:textSize="20sp"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@android:color/white"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/update_account_header" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_full_name"
+            android:layout_below="@+id/rl_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColorDescr"
+            tools:text="Иван Иванов"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:lineSpacingExtra="6sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/tv_credit"
+            android:layout_below="@+id/tv_full_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColorDescr"
+            tools:text="кредиты: 0 ₽"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:lineSpacingExtra="6sp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="14sp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fl_name_view"
+            android:layout_marginTop="13dp"
+            android:layout_below="@id/tv_credit">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/bg_round_corner_gray"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp">
+
+                    <EditText
+                        android:id="@+id/ed_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:inputType="text"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_toLeftOf="@+id/iv_icon_person"
+                        android:textColor="@color/colorTextColorHeader"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toStartOf="@+id/iv_icon_person" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/iv_icon_person"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:tint="@color/colorIconGray"
+                        android:src="@drawable/ic_person_24dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_name_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextColorHeader"
+                android:text="@string/name"
+                android:background="@android:color/white"
+                android:layout_marginStart="27dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textSize="14sp"
+                android:layout_marginLeft="27dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fl_sr_name_view"
+            android:layout_marginTop="23dp"
+            android:layout_below="@id/fl_name_view">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_round_corner_gray"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp">
+
+                    <EditText
+                        android:id="@+id/ed_sr_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:inputType="text"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_toLeftOf="@+id/iv_icon_person1"
+                        android:textColor="@color/colorTextColorHeader"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toStartOf="@+id/iv_icon_person1" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/iv_icon_person1"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:tint="@color/colorIconGray"
+                        android:src="@drawable/ic_person_24dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_sr_name_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextColorHeader"
+                android:text="@string/sr_name"
+                android:background="@android:color/white"
+                android:layout_marginStart="27dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textSize="14sp"
+                android:layout_marginLeft="27dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ly_phone_number_view"
+            android:layout_marginTop="23dp"
+            android:layout_below="@id/fl_sr_name_view">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/bg_round_corner_gray"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/ic_russia"
+                        android:layout_marginLeft="16dp" />
+
+                    <TextView
+                        android:id="@+id/ed_phone_prefix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorTextColorHeader"
+                        android:text="+7 "/>
+
+                    <com.santalu.maskedittext.MaskEditText
+                        android:id="@+id/ed_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:inputType="phone"
+                        android:enabled="false"
+                        android:imeOptions="actionNext"
+                        android:digits= "0123456789"
+                        android:maxLength="15"
+                        app:met_mask="(###) ###-##-##"
+                        android:textColor="@color/colorTextColorHeader"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_phone_number_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextColorHeader"
+                android:text="@string/mobile"
+                android:background="@android:color/white"
+                android:layout_marginStart="27dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textSize="14sp"
+                android:layout_marginLeft="27dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fl_email_view"
+            android:layout_marginTop="23dp"
+            android:layout_below="@id/ly_phone_number_view">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_round_corner_gray"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp">
+
+                    <EditText
+                        android:id="@+id/ed_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:inputType="text"
+                        android:enabled="false"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_toLeftOf="@+id/iv_icon_person2"
+                        android:textColor="@color/colorTextColorHeader"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toStartOf="@+id/iv_icon_person2" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/iv_icon_person2"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:tint="@color/colorIconGray"
+                        android:src="@drawable/ic_email_24dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_email_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextColorHeader"
+                android:text="@string/email"
+                android:background="@android:color/white"
+                android:layout_marginStart="27dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textSize="14sp"
+                android:layout_marginLeft="27dp" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_registration_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fl_email_view"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:lineSpacingExtra="6sp"
+            android:visibility="gone"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/update_account"
+            android:id="@+id/tv_update_account"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@+id/tv_registration_error"
+            android:background="@drawable/bg_enable_round_corner"
+            android:gravity="center"/>
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="46dp"
+            android:id="@+id/pb_loading"
+            android:theme="@style/progressBarWhite"
+            android:layout_below="@+id/tv_registration_error"
+            android:visibility="gone"
+            android:gravity="center" />
+
+    </RelativeLayout>
+</ScrollView>
