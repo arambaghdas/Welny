@@ -213,15 +213,4 @@ public class RegisterPresenter implements RequestView {
         baseView.showErrorResponse(message);
         baseView.disableRegistration();
     }
-
-    public String capSentences(String text) {
-        if (!text.isEmpty()) {
-            if (text.length() == 1) {
-                return text.toUpperCase();
-            } else {
-                return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
-            }
-        }
-        return text;
-    }
 }

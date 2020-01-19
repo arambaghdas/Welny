@@ -161,8 +161,7 @@ public class NetworkRequest {
                             if (signUpResponse.getResult() == null) {
                                 requestView.onVerifyCodeFailResponse(activity.getString(R.string.verify_code_failed));
                             } else {
-                                Preferences.setUid(mContext, String.valueOf(signUpResponse.getResult().getUid()));
-                                Preferences.setToken(mContext, signUpResponse.getResult().getToken());
+                                Preferences.setUserSession(mContext, signUpResponse.getResult());
                                 requestView.onVerifyCodeSignUpResponse();
                             }
                         }
@@ -245,8 +244,7 @@ public class NetworkRequest {
                             if (signUpResponse.getResult() == null) {
                                 requestView.onRegistrationFailResponse(activity.getString(R.string.verify_code_failed));
                             } else {
-                                Preferences.setUid(mContext, String.valueOf(signUpResponse.getResult().getUid()));
-                                Preferences.setToken(mContext, signUpResponse.getResult().getToken());
+                                Preferences.setUserSession(mContext, signUpResponse.getResult());
                                 requestView.onRegistrationSuccessResponse();
                             }
                         }

@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -23,9 +26,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.call.welny.util.Links;
 import com.call.welny.util.Preferences;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Cookie;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -53,31 +61,31 @@ public class WebViewActivity extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webview);
         progressBar = (ProgressBar) findViewById(R.id.progress_circular);
         openWebView();
-
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && this.webView.canGoBack()) {
-            this.webView.goBack();
-            return true;
-        }
-
-        return super.onKeyDown(keyCode, event);
     }
 
     private void openWebView() {
-
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
-        //WebViewClientImpl webViewClient = new WebViewClientImpl(this);
-        //webView.setWebViewClient(webViewClient);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setPluginState(WebSettings.PluginState.ON);
 
-        webView.loadUrl(link);
+        String cookie = "session=" + Preferences.getUserSession(this);
 
+
+        webView.setWebChromeClient(new WebChromeClient());
+
+        CookieSyncManager.createInstance(WebViewActivity.this);
         CookieManager cookieManager = CookieManager.getInstance();
-        //cookieManager.setCookie(link, "session=" + Preferences.getUserSession(this));
+        cookieManager.removeSessionCookie();
+        cookieManager.setCookie(Links.BASE_URL, cookie);
+        CookieSyncManager.getInstance().sync();
+
+        Map<String, String> header = new HashMap<String, String>();
+        header.put("Cookie", cookie);
+
+        webView.loadUrl(link, header);
 
         webView.setWebViewClient(new WebViewClient(){
             @Override
@@ -111,14 +119,39 @@ public class WebViewActivity extends AppCompatActivity {
 
     }
 
-
     @OnClick(R.id.rl_arrow_back)
     public void onBack() {
-        super.onBackPressed();
+        navigateBack();
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        navigateBack();
+    }
+
+    private void navigateBack() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void setCookie() {
+        CookieManager cookieManager = CookieManager.getInstance();
+        removeCookie();
+        cookieManager.setCookie(link, "session=" + Preferences.getUserSession(this));
+        Log.v("setCookie", "session = " + Preferences.getUserSession(this));
+
+    }
+
+    private void removeCookie() {
+        CookieManager cookieManager = CookieManager.getInstance();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.removeSessionCookies(value -> {
+            });
+        } else {
+            cookieManager.removeSessionCookie();
+        }
     }
 }

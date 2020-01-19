@@ -69,6 +69,7 @@
     <string name="call_to_operator">Позвонить оператору</string>
     <string name="about_welny">О Welny</string>
     <string name="zone_close">Зона покрытия</string>
+    <string name="zone_close_text">"На текущий момент сервис предоставляется в г. Москва в пределах МКАД."</string>
     <string name="agreement">Соглашение</string>
     <string name="confidential">Конфиденциальность</string>
     <string name="faq">FAQ</string>
@@ -80,5 +81,15 @@
     <string name="code_sent">Код отправлен</string>
     <string name="request_code_error_message">Отправить код повторно можно не менее чем через 60 секунд после предыдущей отправки</string>
     <string name="registration">Registration</string>
+    <string name="message_type_header1">Закажи массаж</string>
+    <string name="message_type_header2">Для одного человека</string>
+    <string name="message_type_header3">Массаж для</string>
+    <string name="message_type_header4">двоих</string>
+    <string name="message_type_header5">Для двоих человек с двумя специалистами</string>
+    <string name="message_type_header6">Пригласи друга</string>
+    <string name="message_type_header7">И получи скидку</string>
+    <string name="message_type_header8">Поделись промо-кодом с друзьями</string>
+    <string name="user_agreement">пользовательского соглашения</string>
+    <string name="user_confidential">политики конфиденциальности</string>
 
 </resources>

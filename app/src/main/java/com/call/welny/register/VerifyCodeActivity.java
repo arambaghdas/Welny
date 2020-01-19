@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -18,10 +20,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.call.welny.R;
+import com.call.welny.WebViewActivity;
 import com.call.welny.WelnyActivity;
 import com.call.welny.log.LogsActivity;
 import com.call.welny.presenter.GetUserInfoPresenter;
 import com.call.welny.presenter.RegisterPresenter;
+import com.call.welny.util.Links;
 import com.call.welny.views.RegisterView;
 import com.call.welny.views.UserInfoView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -55,17 +59,56 @@ public class VerifyCodeActivity extends AppCompatActivity implements RegisterVie
 
         edPhoneCode.requestFocus();
         phone = getIntent().getStringExtra("phone");
-        Spanned descr = Html.fromHtml("Отправляя код вы полностью принимаете условия " +
-                "<a href='https://welny.ru/terms/mobile.html'>пользовательского соглашения</a>" + " и " +
-                "<a href='https://welny.ru/terms/privacy.html'>политики конфиденциальности</a>" +
-                ", а также даете согласие на обработку персональных данных");
-        tvVerifyCodeDescr.setMovementMethod(LinkMovementMethod.getInstance());
-        tvVerifyCodeDescr.setText(descr);
         initObservable();
+        initTextViewLinks();
 
         presenter = new RegisterPresenter(this, this);
         presenter.performGetCode(phone);
         getUserInfoPresenter = new GetUserInfoPresenter(this, this);
+    }
+
+    private void initTextViewLinks() {
+
+        String descr = "Отправляя код вы полностью принимаете условия " +
+                getString(R.string.user_agreement) + " и " +
+                getString(R.string.user_confidential) + " " +
+                "политики конфиденциальности" +
+                ", а также даете согласие на обработку персональных данных";
+
+        SpannableStringBuilder ssBuilder = new SpannableStringBuilder(descr);
+
+        ClickableSpan confidentialSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                openWebView(Links.URL_CONFIDENTIAL, getString(R.string.confidential));
+            }
+        };
+
+        ClickableSpan userAgreementSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                openWebView(Links.URL_AGREEMENT, getString(R.string.agreement));
+            }
+        };
+
+        ssBuilder.setSpan(
+                userAgreementSpan,
+                descr.indexOf(getString(R.string.user_agreement)),
+                descr.indexOf(getString(R.string.user_agreement)) +
+                        String.valueOf(getString(R.string.user_agreement)).length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
+
+        ssBuilder.setSpan(
+                confidentialSpan,
+                descr.indexOf(getString(R.string.user_confidential)),
+                descr.indexOf(getString(R.string.user_confidential)) +
+                        String.valueOf(getString(R.string.user_confidential)).length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
+
+        tvVerifyCodeDescr.setText(ssBuilder);
+        tvVerifyCodeDescr.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @SuppressLint("CheckResult")
@@ -194,6 +237,15 @@ public class VerifyCodeActivity extends AppCompatActivity implements RegisterVie
         } else {
             tvGetCode.setBackground( getResources().getDrawable(R.drawable.bg_disable_round_corner));
         }
+    }
+
+    private void openWebView(String link, String title) {
+        Intent intent = new Intent(this, WebViewActivity.class);
+        Bundle b = new Bundle();
+        b.putString("link", link);
+        b.putString("title", title);
+        intent.putExtras(b);
+        startActivity(intent);
     }
 
 

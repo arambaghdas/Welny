@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -49,10 +48,6 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welny);
         ButterKnife.bind(this);
-
-        if (Build.VERSION.SDK_INT >= 21) {
-               getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorLight));
-        }
 
         RelativeLayout menuIcon = findViewById(R.id.rl_menu);
         navDrawer = findViewById(R.id.drawer_layout);
@@ -201,8 +196,7 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
 
     @Override
     public void performLogOut() {
-        Preferences.setToken(this, "");
-        Preferences.setUid(this, "");
+        Preferences.clearUserSession(this);
         Preferences.setUserInfo(this, null);
         Intent intent = new Intent(this, VerifyPhoneActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

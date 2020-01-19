@@ -9,19 +9,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.call.welny.R;
 import com.call.welny.WebViewActivity;
+import com.call.welny.ZoneCloseActivity;
 import com.call.welny.util.Links;
 
 import static com.call.welny.util.Links.PHONE_NUMBER;
@@ -51,7 +48,10 @@ public class SupportFragment extends Fragment {
 
         TextView textViewZoneClose = view.findViewById(R.id.tv_zone_close);
         textViewZoneClose.setOnClickListener(v -> {
-            openWebView(Links.URL_PRICES, getString(R.string.zone_close));
+
+            Intent intent = new Intent(getActivity(), ZoneCloseActivity.class);
+            startActivity(intent);
+
         });
 
         TextView textViewAboutWelny = view.findViewById(R.id.tv_about_welny);
@@ -88,7 +88,7 @@ public class SupportFragment extends Fragment {
         startActivity(intent);
     }
 
-    public void setApplicationVersion() {
+    private void setApplicationVersion() {
         try {
             PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
             String versionName = pInfo.versionName;

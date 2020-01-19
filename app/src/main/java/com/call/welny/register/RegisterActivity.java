@@ -39,7 +39,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView,
     @BindView(R.id.rl_arrow_back) RelativeLayout rlArrowBack;
 
     private String phone, loginCode;
-    private boolean triggerNameChange, triggerSrNameChange;
     private RegisterPresenter presenter;
     private GetUserInfoPresenter getUserInfoPresenter;
 
@@ -52,8 +51,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView,
         phone = getIntent().getStringExtra("phone");
         loginCode = getIntent().getStringExtra("loginCode");
         edName.requestFocus();
-        triggerNameChange = false;
-        triggerSrNameChange = false;
 
         presenter = new RegisterPresenter(this, this);
         getUserInfoPresenter = new GetUserInfoPresenter(this, this);
@@ -72,18 +69,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView,
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(CharSequence::toString)
                 .subscribe(input -> {
-                    if (triggerNameChange) {
-                        String text = presenter.capSentences(input);
-                        presenter.checkRegistrationInput(text,
-                                edSrName.getText().toString(), edEmail.getText().toString());
-                        if (text.length() == 1) {
-                            triggerNameChange = false;
-                            edName.setText(text);
-                            edName.setSelection(text.length());
-                        }
-                    } else {
-                        triggerNameChange = true;
-                    }
+                    presenter.checkRegistrationInput(input,
+                            edSrName.getText().toString(), edEmail.getText().toString());
                 });
 
         RxTextView
@@ -91,18 +78,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView,
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(CharSequence::toString)
                 .subscribe(input -> {
-                    if (triggerSrNameChange) {
-                        String text = presenter.capSentences(input);
-                        presenter.checkRegistrationInput(edName.getText().toString(),
-                                text, edEmail.getText().toString());
-                        if (text.length() == 1) {
-                            triggerSrNameChange = false;
-                            edSrName.setText(text);
-                            edSrName.setSelection(text.length());
-                        }
-                    } else {
-                        triggerSrNameChange = true;
-                    }
+                    presenter.checkRegistrationInput(edName.getText().toString(),
+                            input, edEmail.getText().toString());
                 });
 
         edEmail.setOnFocusChangeListener((v, hasFocus) -> {
@@ -146,8 +123,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView,
 
     @OnClick(R.id.tv_registration_complete)
     public void register() {
-        presenter.performRegistration(this, phone, loginCode, presenter.capSentences(edName.getText().toString()),
-                presenter.capSentences(edSrName.getText().toString()), edEmail.getText().toString());
+        presenter.performRegistration(this, phone, loginCode, edName.getText().toString(),
+                edSrName.getText().toString(), edEmail.getText().toString());
     }
     @OnClick(R.id.fy_top_view)
     public void openLogs() {

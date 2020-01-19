@@ -40,7 +40,6 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
     @BindView(R.id.tv_credit) TextView tvCredit;
     @BindView(R.id.ed_phone) MaskEditText edPhone;
     @BindView(R.id.ed_email) EditText edEmail;
-    private boolean triggerNameChange, triggerSrNameChange;
     private RegisterPresenter presenter;
     private VerifyCodePresenter presenterCode;
     private UpdateUserInfoPresenter updateUserInfoPresenter;
@@ -81,18 +80,8 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(CharSequence::toString)
                 .subscribe(input -> {
-                    if (triggerNameChange) {
-                        String text = presenter.capSentences(input);
-                        presenter.checkRegistrationInput(text,
-                                edSrName.getText().toString(), edEmail.getText().toString());
-                        if (text.length() == 1) {
-                            triggerNameChange = false;
-                            edName.setText(text);
-                            edName.setSelection(text.length());
-                        }
-                    } else {
-                        triggerNameChange = true;
-                    }
+                    presenter.checkRegistrationInput(input,
+                            edSrName.getText().toString(), edEmail.getText().toString());
                 });
 
         RxTextView
@@ -100,18 +89,8 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(CharSequence::toString)
                 .subscribe(input -> {
-                    if (triggerSrNameChange) {
-                        String text = presenter.capSentences(input);
-                        presenter.checkRegistrationInput(edName.getText().toString(),
-                                text, edEmail.getText().toString());
-                        if (text.length() == 1) {
-                            triggerSrNameChange = false;
-                            edSrName.setText(text);
-                            edSrName.setSelection(text.length());
-                        }
-                    } else {
-                        triggerSrNameChange = true;
-                    }
+                    presenter.checkRegistrationInput(edName.getText().toString(),
+                            input, edEmail.getText().toString());
                 });
 
         /*
