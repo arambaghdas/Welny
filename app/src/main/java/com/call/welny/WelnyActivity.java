@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -33,6 +33,8 @@ import com.call.welny.register.VerifyPhoneActivity;
 import com.call.welny.util.Links;
 import com.call.welny.util.Preferences;
 import com.call.welny.views.UserInfoView;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -88,30 +90,24 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
                 linearLayoutWelnyPlus.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
                     Fragment second;
+                    String tag;
 
                     if (getUserInfo != null && getUserInfo.getCustomerPackage() != null) {
                         second = new OrderWelnyFragment();
+                        tag = "OrderWelnyFragment";
                     } else {
                         second = new TryWelnyFragment();
+                        tag = "TryWelnyFragment";
                     }
-
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    fragmentTransaction.replace(R.id.layout, second);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    addToBackStuck(second, tag, true);
                 });
 
                 LinearLayout linearLayoutInviteFriends = findViewById(R.id.ly_invite_friends);
                 linearLayoutInviteFriends.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
                     final Fragment second = new InviteFriendFragment();
-
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    fragmentTransaction.replace(R.id.layout, second);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    String tag = "InviteFriendFragment";
+                    addToBackStuck(second, tag, true);
                 });
 
                 LinearLayout linearLayoutOrders = findViewById(R.id.ly_orders);
@@ -132,12 +128,8 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
                 linearLayoutAccount.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
                     final Fragment second = new UpdateAccountFragment();
-
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    fragmentTransaction.replace(R.id.layout, second);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    String tag = "UpdateAccountFragment";
+                    addToBackStuck(second, tag, true);
                 });
 
                 LinearLayout linearLayoutSupport = findViewById(R.id.ly_support);
@@ -145,22 +137,15 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
                     navDrawer.closeDrawer(GravityCompat.START);
 
                     final Fragment second = new SupportFragment();
-
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    fragmentTransaction.replace(R.id.layout, second);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    String tag = "SupportFragment";
+                    addToBackStuck(second, tag, true);
                 });
 
                 textViewOrder.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
                     final Fragment second = new MassageTypesFragment();
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    fragmentTransaction.replace(R.id.layout, second);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    String tag = "MassageTypesFragment";
+                    addToBackStuck(second, tag,true);
                 });
 
                 LinearLayout linearLayoutExit = findViewById(R.id.ly_exit);
@@ -174,11 +159,8 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
         });
 
         final Fragment second = new MassageTypesFragment();
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.layout, second);
-        fragmentTransaction.commit();
+        String tag = "MassageTypesFragment";
+        addToBackStuck(second, tag,false);
 
         presenter = new GetUserInfoPresenter(this, this);
     }
@@ -222,6 +204,38 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void addToBackStuck(Fragment second, String tag, boolean addToBackStack) {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        for (int entry = 0; entry < fragmentManager.getBackStackEntryCount(); entry++){
+            Log.v("addToBackStuck", "Tag: " + fragmentManager.getBackStackEntryAt(entry).getName());
+        }
+
+        Log.v("addToBackStuck", "-----------------------------------------");
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        boolean exist = false;
+        if (addToBackStack) {
+
+            /*
+             for (int entry = 0; entry < fragmentManager.getBackStackEntryCount(); entry++){
+                if (fragmentManager.getBackStackEntryAt(entry).getName().equals(tag)) {
+                    exist = true;
+                    break;
+                }
+            }
+
+            if (!exist) {
+                fragmentTransaction.addToBackStack(tag);
+            }
+            */
+
+            fragmentTransaction.addToBackStack(tag);
+        }
+        fragmentTransaction.replace(R.id.layout, second, tag);
+        fragmentTransaction.commit();
     }
 
 }

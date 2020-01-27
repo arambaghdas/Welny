@@ -54,6 +54,10 @@ public class Preferences {
     static public String getUserSession(Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(preference_file_key, Context.MODE_PRIVATE);
         return sharedPref.getString(preference_user_session_info_key, "");
+
+        //Gson gson = new Gson();
+        //String json = sharedPref.getString(preference_user_session_info_key, "");
+        //return gson.fromJson(json, UserInfo.class);
     }
 
     static public void setUserSession(Context context, UserInfo userInfo) {
