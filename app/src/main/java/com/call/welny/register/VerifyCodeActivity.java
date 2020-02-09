@@ -3,12 +3,10 @@ package com.call.welny.register;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -16,7 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.call.welny.R;
@@ -25,6 +22,7 @@ import com.call.welny.WelnyActivity;
 import com.call.welny.log.LogsActivity;
 import com.call.welny.presenter.GetUserInfoPresenter;
 import com.call.welny.presenter.RegisterPresenter;
+import com.call.welny.util.Analytics;
 import com.call.welny.util.Links;
 import com.call.welny.views.RegisterView;
 import com.call.welny.views.UserInfoView;
@@ -68,7 +66,6 @@ public class VerifyCodeActivity extends AppCompatActivity implements RegisterVie
     }
 
     private void initTextViewLinks() {
-
         String descr = "Отправляя код вы полностью принимаете условия " +
                 getString(R.string.user_agreement) + " и " +
                 getString(R.string.user_confidential) + " " +
@@ -144,7 +141,8 @@ public class VerifyCodeActivity extends AppCompatActivity implements RegisterVie
 
     @OnClick(R.id.tv_get_code)
     public void getCode() {
-        presenter.performVerifyGetCode(phone);
+        Analytics.sendGetCodeAgainEvent();
+        presenter.performGetCodeAgain(phone);
     }
 
     @Override
@@ -159,6 +157,7 @@ public class VerifyCodeActivity extends AppCompatActivity implements RegisterVie
 
     @Override
     public void showGetUserInfoSuccessResponse() {
+        Analytics.sendRegistrationCodeEnteredEvent();
         Intent intent = new Intent(this, WelnyActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -211,6 +210,7 @@ public class VerifyCodeActivity extends AppCompatActivity implements RegisterVie
 
     @Override
     public void showVerifyCodeSuccessResponse(String message) {
+        Analytics.sendRegistrationCodeEnteredEvent();
         Intent intent = new Intent(this, RegisterActivity.class);
         intent.putExtra("phone", phone);
         intent.putExtra("loginCode", edPhoneCode.getText().toString());
@@ -244,9 +244,8 @@ public class VerifyCodeActivity extends AppCompatActivity implements RegisterVie
         Bundle b = new Bundle();
         b.putString("link", link);
         b.putString("title", title);
+        b.putBoolean("auth", false);
         intent.putExtras(b);
         startActivity(intent);
     }
-
-
 }

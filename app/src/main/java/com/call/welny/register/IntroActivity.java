@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.call.welny.R;
 import com.call.welny.register.VerifyPhoneActivity;
+import com.call.welny.util.Analytics;
 import com.call.welny.util.Preferences;
 import com.google.android.material.tabs.TabLayout;
 
@@ -49,6 +50,7 @@ public class IntroActivity extends Activity {
 
     @OnClick(R.id.tv_registration)
     public void openGetCodeActivity() {
+        Analytics.sendRegistrationInitiatedEvent();
         Preferences.setWelcomeScreenSeenState(this, false);
         Intent intent = new Intent(this, VerifyPhoneActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

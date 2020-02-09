@@ -30,12 +30,10 @@ import com.call.welny.log.LogsActivity;
 import com.call.welny.object.GetUserInfo;
 import com.call.welny.presenter.GetUserInfoPresenter;
 import com.call.welny.register.VerifyPhoneActivity;
+import com.call.welny.util.Analytics;
 import com.call.welny.util.Links;
 import com.call.welny.util.Preferences;
 import com.call.welny.views.UserInfoView;
-
-import java.util.List;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -89,6 +87,7 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
                 LinearLayout linearLayoutWelnyPlus = findViewById(R.id.ly_welny_plus);
                 linearLayoutWelnyPlus.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
+                    Analytics.sendMenuWelnyPlusEvent();
                     Fragment second;
                     String tag;
 
@@ -99,26 +98,28 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
                         second = new TryWelnyFragment();
                         tag = "TryWelnyFragment";
                     }
-                    addToBackStuck(second, tag, true);
+                    addToBackStuck(second, tag, false);
                 });
 
                 LinearLayout linearLayoutInviteFriends = findViewById(R.id.ly_invite_friends);
                 linearLayoutInviteFriends.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
+                    Analytics.sendMenuInviteEvent();
                     final Fragment second = new InviteFriendFragment();
                     String tag = "InviteFriendFragment";
-                    addToBackStuck(second, tag, true);
+                    addToBackStuck(second, tag, false);
                 });
 
                 LinearLayout linearLayoutOrders = findViewById(R.id.ly_orders);
                 linearLayoutOrders.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
-
+                    Analytics.sendMenuOrdersEvent();
                     SystemClock.sleep(500);
 
                     Intent intent = new Intent(this, WebViewActivity.class);
                     Bundle b1 = new Bundle();
                     b1.putString("link", Links.BOOKINGS_URL);
+                    b1.putBoolean("auth", true);
                     intent.putExtras(b1);
                     startActivity(intent);
 
@@ -127,30 +128,32 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
                 LinearLayout linearLayoutAccount = findViewById(R.id.ly_account);
                 linearLayoutAccount.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
+                    Analytics.sendMenuAccountEvent();
                     final Fragment second = new UpdateAccountFragment();
                     String tag = "UpdateAccountFragment";
-                    addToBackStuck(second, tag, true);
+                    addToBackStuck(second, tag, false);
                 });
 
                 LinearLayout linearLayoutSupport = findViewById(R.id.ly_support);
                 linearLayoutSupport.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
-
+                    Analytics.sendMenuSupportEvent();
                     final Fragment second = new SupportFragment();
                     String tag = "SupportFragment";
-                    addToBackStuck(second, tag, true);
+                    addToBackStuck(second, tag, false);
                 });
 
                 textViewOrder.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
                     final Fragment second = new MassageTypesFragment();
                     String tag = "MassageTypesFragment";
-                    addToBackStuck(second, tag,true);
+                    addToBackStuck(second, tag,false);
                 });
 
                 LinearLayout linearLayoutExit = findViewById(R.id.ly_exit);
                 linearLayoutExit.setOnClickListener(v -> {
-                   presenter.sendLogOutRequest();
+                    Analytics.sendMenuOutEvent();
+                    presenter.sendLogOutRequest();
                 });
 
                 navDrawer.openDrawer((int) Gravity.START);
@@ -207,18 +210,16 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
     }
 
     private void addToBackStuck(Fragment second, String tag, boolean addToBackStack) {
-
         FragmentManager fragmentManager = getSupportFragmentManager();
-        for (int entry = 0; entry < fragmentManager.getBackStackEntryCount(); entry++){
-            Log.v("addToBackStuck", "Tag: " + fragmentManager.getBackStackEntryAt(entry).getName());
-        }
+        //for (int entry = 0; entry < fragmentManager.getBackStackEntryCount(); entry++){
+        //    Log.v("addToBackStuck", "Tag: " + fragmentManager.getBackStackEntryAt(entry).getName());
+        //}
 
-        Log.v("addToBackStuck", "-----------------------------------------");
+        //Log.v("addToBackStuck", "-----------------------------------------");
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        boolean exist = false;
-        if (addToBackStack) {
 
+        if (addToBackStack) {
             /*
              for (int entry = 0; entry < fragmentManager.getBackStackEntryCount(); entry++){
                 if (fragmentManager.getBackStackEntryAt(entry).getName().equals(tag)) {

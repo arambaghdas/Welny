@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.call.welny.R;
+import com.call.welny.util.Analytics;
 import com.call.welny.util.Links;
 import com.call.welny.util.Preferences;
 
@@ -40,6 +41,7 @@ public class InviteFriendFragment extends Fragment {
         TextView textViewPromoCode = view.findViewById(R.id.tv_header3);
         TextView textViewInviteFriend = view.findViewById(R.id.tv_invite_friend);
         textViewInviteFriend.setOnClickListener(v -> {
+            Analytics.sendInviteAndroidEvent();
             Intent share = new Intent(android.content.Intent.ACTION_SEND);
             share.setType("text/plain");
             share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);

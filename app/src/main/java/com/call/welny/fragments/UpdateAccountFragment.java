@@ -18,6 +18,7 @@ import com.call.welny.object.GetUserInfo;
 import com.call.welny.presenter.RegisterPresenter;
 import com.call.welny.presenter.UpdateUserInfoPresenter;
 import com.call.welny.presenter.VerifyCodePresenter;
+import com.call.welny.util.Analytics;
 import com.call.welny.util.Preferences;
 import com.call.welny.views.BaseView;
 import com.call.welny.views.RegisterView;
@@ -176,6 +177,7 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
 
     @OnClick(R.id.tv_update_account)
     public void updateAccount() {
+        Analytics.sendAccountUpdateEvent();
         updateUserInfoPresenter.sendUpdateUserInfoRequest(edName.getText().toString(),
                 edSrName.getText().toString());
     }

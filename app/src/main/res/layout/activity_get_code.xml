@@ -83,8 +83,8 @@
                         android:inputType="phone"
                         android:imeOptions="actionNext"
                         android:digits= "0123456789"
-                        android:text="9620661805"
-                        android:maxLength="16"
+                        tools:text="9620661805"
+                        android:maxLength="15"
                         app:met_mask="(###) ###-##-##"
                         android:textColor="@color/colorTextColorHeader"
                         android:textSize="14sp" />

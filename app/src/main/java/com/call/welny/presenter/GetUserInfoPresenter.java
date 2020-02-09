@@ -49,12 +49,12 @@ public class GetUserInfoPresenter implements RequestUserInfoView {
 
     @Override
     public void onLogOutSuccessResponse(String message) {
-        //userInfo.showToastMessage(message);
         userInfo.performLogOut();
     }
 
     @Override
     public void onLogOutFailResponse(String message) {
-        userInfo.showToastMessage(message);
+         userInfo.showGetUserInfoFailResponse();
+         userInfo.showToastMessage(message);
     }
 }

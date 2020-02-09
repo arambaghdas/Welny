@@ -19,6 +19,7 @@ import com.call.welny.WelnyActivity;
 import com.call.welny.log.LogsActivity;
 import com.call.welny.presenter.GetUserInfoPresenter;
 import com.call.welny.presenter.RegisterPresenter;
+import com.call.welny.util.Analytics;
 import com.call.welny.views.RegisterView;
 import com.call.welny.views.UserInfoView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -139,6 +140,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView,
 
     @Override
     public void showGetUserInfoSuccessResponse() {
+        Analytics.sendRegistrationCompletedEvent();
         Intent intent = new Intent(this, WelnyActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

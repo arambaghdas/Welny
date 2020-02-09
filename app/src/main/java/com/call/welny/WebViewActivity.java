@@ -35,6 +35,7 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
     private WebView webView;
     private ProgressBar progressBar;
     private String link;
+    boolean auth;
     private GetUserInfoPresenter getUserInfoPresenter;
 
     @BindView(R.id.rl_arrow_back) RelativeLayout rlArrowBack;
@@ -51,6 +52,7 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
         Bundle b = getIntent().getExtras();
         if (b != null) {
             link = b.getString("link");
+            auth = b.getBoolean("auth");
             tvHeader.setText(b.getString("title"));
         }
 
@@ -70,12 +72,17 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
 
         webView.setWebChromeClient(new WebChromeClient());
 
-        String value = Preferences.getUserSession(this);
-        byte[] data = value.getBytes(Charset.forName("UTF-8"));
-        String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+        if (auth) {
+            String value = Preferences.getUserSession(this);
+            byte[] data = value.getBytes(Charset.forName("UTF-8"));
+            String base64 = Base64.encodeToString(data, Base64.DEFAULT);
 
-        String newUrl = link + "/?session=" + base64;
-        webView.loadUrl(newUrl);
+            String newUrl = link + "/?session=" + base64;
+            webView.loadUrl(newUrl);
+        } else {
+            webView.loadUrl(link);
+        }
+
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
@@ -108,6 +115,7 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String url) {
                 Log.d("onConsoleMessage", "shouldOverrideUrlLoading: " + url);
+                webView.loadUrl(url);
                 return true;
             }
         });
@@ -121,15 +129,24 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
 
     @Override
     public void onBackPressed() {
-        navigateBack();
+        performOnBack();
     }
 
     private void navigateBack() {
         if (webView.canGoBack()) {
             webView.goBack();
         } else {
-            progressBar.setVisibility(View.VISIBLE);
+            performOnBack();
+        }
+    }
+
+    private void performOnBack() {
+        progressBar.setVisibility(View.VISIBLE);
+        if (auth) {
             getUserInfoPresenter.sendGetUserRequest();
+        } else {
+            progressBar.setVisibility(View.GONE);
+            super.onBackPressed();
         }
     }
 

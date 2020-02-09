@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.call.welny.R;
 import com.call.welny.WebViewActivity;
 import com.call.welny.ZoneCloseActivity;
+import com.call.welny.util.Analytics;
 import com.call.welny.util.Links;
 
 import static com.call.welny.util.Links.PHONE_NUMBER;
@@ -36,6 +37,7 @@ public class SupportFragment extends Fragment {
 
         TextView textViewCallToOperator = view.findViewById(R.id.tv_call_to_operator);
         textViewCallToOperator.setOnClickListener(v -> {
+            Analytics.sendSupportCallEvent();
             Uri u = Uri.parse("tel:" + PHONE_NUMBER);
             Intent i = new Intent(Intent.ACTION_DIAL, u);
             try {
@@ -48,7 +50,7 @@ public class SupportFragment extends Fragment {
 
         TextView textViewZoneClose = view.findViewById(R.id.tv_zone_close);
         textViewZoneClose.setOnClickListener(v -> {
-
+            Analytics.sendSupportGeoEvent();
             Intent intent = new Intent(getActivity(), ZoneCloseActivity.class);
             startActivity(intent);
 
@@ -56,21 +58,25 @@ public class SupportFragment extends Fragment {
 
         TextView textViewAboutWelny = view.findViewById(R.id.tv_about_welny);
         textViewAboutWelny.setOnClickListener(v -> {
+            Analytics.sendSupportAboutEvent();
             openWebView(Links.URL_ABOUT, getString(R.string.about_welny));
         });
 
         TextView textViewAgreement = view.findViewById(R.id.tv_agreement);
         textViewAgreement.setOnClickListener(v -> {
+            Analytics.sendSupportTermsEvent();
             openWebView(Links.URL_AGREEMENT, getString(R.string.agreement));
         });
 
         TextView textViewConfidential = view.findViewById(R.id.tv_confidential);
         textViewConfidential.setOnClickListener(v -> {
+            Analytics.sendSupportNdaEvent();
             openWebView(Links.URL_CONFIDENTIAL, getString(R.string.confidential));
         });
 
         TextView textViewFaq = view.findViewById(R.id.tv_faq);
         textViewFaq.setOnClickListener(v -> {
+            Analytics.sendSupportFaqEvent();
             openWebView(Links.URL_FAQ, getString(R.string.faq));
         });
 
@@ -84,6 +90,7 @@ public class SupportFragment extends Fragment {
         Bundle b = new Bundle();
         b.putString("link", link);
         b.putString("title", title);
+        b.putBoolean("auth", false);
         intent.putExtras(b);
         startActivity(intent);
     }

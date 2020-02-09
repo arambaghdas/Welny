@@ -30,7 +30,7 @@ public class RegisterPresenter implements RequestView {
         this.networkRequest = new NetworkRequest(this, activity);
     }
 
-    public void performVerifyGetCode(String number) {
+    public void performGetCodeAgain(String number) {
         sendGetCodeRequest(number);
     }
 

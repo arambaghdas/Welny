@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.call.welny.R;
 import com.call.welny.log.LogsActivity;
 import com.call.welny.presenter.VerifyCodePresenter;
+import com.call.welny.util.Analytics;
 import com.call.welny.views.BaseView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.santalu.maskedittext.MaskEditText;
@@ -62,6 +63,7 @@ public class VerifyPhoneActivity extends AppCompatActivity implements BaseView {
 
     @OnClick(R.id.tv_get_code)
     public void getCode() {
+        Analytics.sendGetCodeEvent();
         Intent intent = new Intent(this, VerifyCodeActivity.class);
         intent.putExtra("phone", presenter.getPhoneNumber(edPhone.getRawText()));
         startActivity(intent);

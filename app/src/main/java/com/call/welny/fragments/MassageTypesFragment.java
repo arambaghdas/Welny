@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.call.welny.R;
 import com.call.welny.WebViewActivity;
+import com.call.welny.util.Analytics;
 import com.call.welny.util.Links;
 
 @SuppressLint("ValidFragment")
@@ -32,24 +33,28 @@ public class MassageTypesFragment extends Fragment {
         ImageView imageViewType3 = view.findViewById(R.id.iv_massage_type3);
 
         imageViewType1.setOnClickListener(v -> {
+            Analytics.sendMainSingleEvent();
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
             Bundle b1 = new Bundle();
             b1.putString("link", Links.ORDER_MASSAGE_URL);
+            b1.putBoolean("auth", true);
             intent.putExtras(b1);
             startActivity(intent);
         });
 
         imageViewType2.setOnClickListener(v -> {
+            Analytics.sendMainDoubleEvent();
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
             Bundle b1 = new Bundle();
             b1.putString("link", Links.ORDER_MASSAGE_URL);
+            b1.putBoolean("auth", true);
             intent.putExtras(b1);
             startActivity(intent);
         });
 
         imageViewType3.setOnClickListener(v -> {
+            Analytics.sendMainInviteEvent();
             final Fragment second = new InviteFriendFragment();
-
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
             fragmentTransaction.replace(R.id.layout, second);
