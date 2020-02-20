@@ -10,6 +10,6 @@ public class Links {
 
     static public String BASE_URL_MOBILE ="http://dev.welny.ru/app/mobile/#/";
     static public String BOOKINGS_URL = BASE_URL_MOBILE + "bookings";
-    static public String ORDER_MASSAGE_URL = BASE_URL_MOBILE + "booking/?event=Landing_Form_Top_Transition";
+    static public String ORDER_MASSAGE_URL = BASE_URL_MOBILE + "booking";
     static public String PHONE_NUMBER = "+74954450739";
 }
