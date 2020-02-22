@@ -113,4 +113,9 @@ public class Analytics {
         YandexMetrica.reportEvent("invite_android");
         Log.v("Analytics", "invite_android");
     }
+
+    public static void sendPromoCodeEvent() {
+        YandexMetrica.reportEvent("invite_copy");
+        Log.v("Analytics", "invite_copy");
+    }
 }
