@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.call.welny.log.FileUtils;
 import com.call.welny.presenter.GetUserInfoPresenter;
+import com.call.welny.util.Links;
 import com.call.welny.util.Preferences;
 import com.call.welny.views.UserInfoView;
 
@@ -54,6 +55,12 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
             link = b.getString("link");
             auth = b.getBoolean("auth");
             tvHeader.setText(b.getString("title"));
+
+            if (link.equals(Links.ORDER_MASSAGE_URL)) {
+                rlBanner.setVisibility(View.GONE);
+            } else {
+                rlBanner.setVisibility(View.VISIBLE);
+            }
         }
 
         webView = (WebView) findViewById(R.id.webview);
