@@ -91,17 +91,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView,
         });
 
         edEmail.addTextChangedListener(textWatcher);
-        /*
-        RxTextView
-                .textChanges(edEmail)
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(CharSequence::toString)
-                .subscribe(input -> {
-                    presenter.checkRegistrationInput(edName.getText().toString(),
-                            edSrName.getText().toString(), input);
-                });
-
-         */
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
