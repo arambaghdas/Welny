@@ -21,8 +21,8 @@
     <string name="should_start_with_seven_nine">Номер телефона должен начинаться с +79</string>
     <string name="should_contain_number">Номер телефона должен начинаться с +79 и состоять из цифр.</string>
     <string name="intro1_header1">Рады видеть вас в</string>
-    <string name="intro1_header2">№1* приложение в России для заказа массажа в Google Play</string>
-    <string name="intro1_header3">*В категории «Здоровье и фитнес»  согласно App Annie</string>
+    <string name="intro1_header2">№1* приложение в России для заказа массажа в AppStore</string>
+    <string name="intro1_header3">*В категории «Здоровье и фитнес» согласно App Annie</string>
     <string name="intro2_header1">Оформить заказ просто</string>
     <string name="intro2_header2">Зарегистрируйтесь</string>
     <string name="intro2_header3">Выберите вид массаж и пол специалиста</string>
@@ -80,7 +80,6 @@
     <string name="incorrect_email_format">Неверный формат e-mail</string>
     <string name="code_sent">Код отправлен</string>
     <string name="request_code_error_message">Отправить код повторно можно не менее чем через 60 секунд после предыдущей отправки</string>
-    <string name="registration">Registration</string>
     <string name="message_type_header1">Закажи массаж</string>
     <string name="message_type_header2">Для одного человека</string>
     <string name="message_type_header3">Массаж для</string>
@@ -91,5 +90,6 @@
     <string name="message_type_header8">Поделись промо-кодом с друзьями</string>
     <string name="user_agreement">пользовательского соглашения</string>
     <string name="user_confidential">политики конфиденциальности</string>
+    <string name="promo_code_share">Ваш промо-код скопирован в буфер обмена</string>
 
 </resources>

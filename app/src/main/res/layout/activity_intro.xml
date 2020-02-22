@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/registration"
+        android:text="@string/register"
         android:id="@+id/tv_registration"
         android:textColor="@android:color/white"
         android:textSize="18sp"
