@@ -8,7 +8,8 @@ public class Links {
     static public String URL_AGREEMENT = BASE_URL + "terms/mobile.html";
     static public String URL_CONFIDENTIAL = BASE_URL + "terms/privacy.html";
 
-    static private String BASE_URL_MOBILE ="http://dev.welny.ru/app/mobile/#/";
+    //static private String BASE_URL_MOBILE ="http://dev.welny.ru/app/mobile/#/";
+    static private String BASE_URL_MOBILE ="https://welny.ru/app_dev/mobile/#/";
     static public String BOOKINGS_URL = BASE_URL_MOBILE + "bookings";
     static public String ORDER_MASSAGE_URL = BASE_URL_MOBILE + "booking";
     static public String PHONE_NUMBER = "+74954450739";

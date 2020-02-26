@@ -24,9 +24,9 @@ public class UpdateUserInfoPresenter implements RequestUpdateUserInfoView {
         this.networkRequest = new NetworkUpdateUserInfoRequest(this, activity);
     }
 
-    public void sendUpdateUserInfoRequest(String name, String surname) {
+    public void sendUpdateUserInfoRequest(String name, String surname, String email) {
         if (CheckNetwork.isNetworkConnected(activity)) {
-            networkRequest.sendUpdateUserInfoRequest(activity, name, surname);
+            networkRequest.sendUpdateUserInfoRequest(activity, name, surname, email);
         } else {
             baseView.showToastMessage(activity.getString(R.string.no_network));
         }

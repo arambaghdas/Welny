@@ -163,28 +163,45 @@ public class RegisterPresenter implements RequestView {
 
     //////////////////////////////// Registration //////////////////////////////////////////////
 
-    public void checkRegistrationInput(String name, String srName, String email) {
+    public boolean checkRegistrationInput(String name, String srName, String email) {
         if (!name.isEmpty() && !srName.isEmpty() && !email.isEmpty()) {
             if (EMAIL_ADDRESS.matcher(email).matches()) {
                 baseView.enableRegistration();
                 baseView.showErrorResponse("");
                 baseView.hideErrorView();
+                return true;
             } else {
                 baseView.disableRegistration();
                 baseView.showErrorResponse(activity.getString(R.string.incorrect_email_format));
                 baseView.showErrorView();
+                return false;
             }
         } else {
             if (!email.isEmpty() && !EMAIL_ADDRESS.matcher(email).matches()) {
                 baseView.disableRegistration();
                 baseView.showErrorResponse(activity.getString(R.string.incorrect_email_format));
                 baseView.showErrorView();
+                return false;
             } else {
                 baseView.disableRegistration();
                 baseView.showErrorResponse("");
                 baseView.hideErrorView();
+                return true;
             }
         }
+    }
+
+    public void validateInput(String name, String srName, String email) {
+        if (!name.isEmpty() && !srName.isEmpty() && !email.isEmpty()) {
+            baseView.enableRegistration();
+        } else {
+            baseView.disableRegistration();
+        }
+    }
+
+    public void hideErrorView() {
+        baseView.showErrorResponse("");
+        baseView.hideErrorView();
     }
 
     public void performRegistration(Context mContext, String phone, String loginCode, String name, String srName, String email) {

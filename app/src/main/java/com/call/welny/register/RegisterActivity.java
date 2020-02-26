@@ -3,8 +3,6 @@ package com.call.welny.register;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -22,6 +20,7 @@ import com.call.welny.presenter.RegisterPresenter;
 import com.call.welny.util.Analytics;
 import com.call.welny.views.RegisterView;
 import com.call.welny.views.UserInfoView;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import butterknife.BindView;
@@ -70,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView,
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(CharSequence::toString)
                 .subscribe(input -> {
-                    presenter.checkRegistrationInput(input,
+                    presenter.validateInput(input,
                             edSrName.getText().toString(), edEmail.getText().toString());
                 });
 
@@ -79,43 +78,41 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView,
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(CharSequence::toString)
                 .subscribe(input -> {
-                    presenter.checkRegistrationInput(edName.getText().toString(),
+                    presenter.validateInput(edName.getText().toString(),
                             input, edEmail.getText().toString());
                 });
 
-        edEmail.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                presenter.checkRegistrationInput(edName.getText().toString(),
-                        edSrName.getText().toString(), edEmail.getText().toString());
+        RxTextView
+                .textChanges(edEmail)
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(CharSequence::toString)
+                .subscribe(input -> {
+                    presenter.validateInput(edName.getText().toString(),
+                            edSrName.getText().toString(), input);
+                    presenter.hideErrorView();
+                });
+
+        edEmail.setOnFocusChangeListener((arg0, hasfocus) -> {
+            if (!hasfocus) {
+                checkRegistrationInput();
             }
         });
 
-        edEmail.addTextChangedListener(textWatcher);
+        RxView.clicks(tvRegistrationComplete)
+                .filter(o -> checkRegistrationInput())
+                .subscribe(this::performRegistration);
     }
 
-    private TextWatcher textWatcher = new TextWatcher() {
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            presenter.checkRegistrationInput(edName.getText().toString(),
-                    edSrName.getText().toString(), s.toString());
-        }
-    };
-
-    @OnClick(R.id.tv_registration_complete)
-    public void register() {
+    public void performRegistration(Object o) {
         presenter.performRegistration(this, phone, loginCode, edName.getText().toString(),
                 edSrName.getText().toString(), edEmail.getText().toString());
     }
+
+    public boolean checkRegistrationInput() {
+        return presenter.checkRegistrationInput(edName.getText().toString(),
+                        edSrName.getText().toString(),  edEmail.getText().toString());
+    }
+
     @OnClick(R.id.fy_top_view)
     public void openLogs() {
         Intent intent = new Intent(this, LogsActivity.class);

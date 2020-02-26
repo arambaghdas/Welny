@@ -33,7 +33,7 @@ public class NetworkUpdateUserInfoRequest {
         this.activity = activity;
     }
 
-    public void sendUpdateUserInfoRequest(Context mContext, String name, String surname) {
+    public void sendUpdateUserInfoRequest(Context mContext, String name, String surname, String email) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
         JsonObject getUserObject = new JsonObject();
@@ -46,6 +46,7 @@ public class NetworkUpdateUserInfoRequest {
         paramObject.addProperty("token", Preferences.getToken(mContext));
         paramObject.addProperty("name", name);
         paramObject.addProperty("surname", surname);
+        paramObject.addProperty("email", email);
         getUserObject.add("params", paramObject);
 
         String request = DateFormat.getDateTimeInstance().format(new Date()) + " Request: " +
@@ -76,7 +77,7 @@ public class NetworkUpdateUserInfoRequest {
                             }
                         } else {
                             AccountResponse getUserInfo = new Gson().fromJson(res, AccountResponse.class);
-                            Preferences.updateUserInfo(mContext, name, surname);
+                            Preferences.updateUserInfo(mContext, name, surname, email);
                             requestView.onUpdateUserInfoSuccessResponse(getUserInfo.getMessage());
                         }
                     } catch (JsonParseException e) {

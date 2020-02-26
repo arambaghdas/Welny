@@ -22,6 +22,7 @@ import com.call.welny.util.Analytics;
 import com.call.welny.util.Preferences;
 import com.call.welny.views.BaseView;
 import com.call.welny.views.RegisterView;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.santalu.maskedittext.MaskEditText;
 
@@ -81,7 +82,7 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(CharSequence::toString)
                 .subscribe(input -> {
-                    presenter.checkRegistrationInput(input,
+                    presenter.validateInput(input,
                             edSrName.getText().toString(), edEmail.getText().toString());
                 });
 
@@ -90,29 +91,40 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(CharSequence::toString)
                 .subscribe(input -> {
-                    presenter.checkRegistrationInput(edName.getText().toString(),
+                    presenter.validateInput(edName.getText().toString(),
                             input, edEmail.getText().toString());
                 });
 
-        /*
         RxTextView
                 .textChanges(edEmail)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(CharSequence::toString)
                 .subscribe(input -> {
-                    presenter.checkRegistrationInput(edName.getText().toString(),
+                    presenter.validateInput(edName.getText().toString(),
                             edSrName.getText().toString(), input);
+                    presenter.hideErrorView();
                 });
 
-        RxTextView
-                .textChanges(edPhone)
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(CharSequence::toString)
-                .subscribe(input -> {
-                    presenterCode.verifyPhoneNumber(edPhone.getRawText());
-                });
+        edEmail.setOnFocusChangeListener((arg0, hasfocus) -> {
+            if (!hasfocus) {
+                checkRegistrationInput();
+            }
+        });
 
-         */
+        RxView.clicks(tvUpdateAccount)
+                .filter(o -> checkRegistrationInput())
+                .subscribe(this::updateAccount);
+    }
+
+    private boolean checkRegistrationInput() {
+        return presenter.checkRegistrationInput(edName.getText().toString(),
+                edSrName.getText().toString(), edEmail.getText().toString());
+    }
+
+    private void updateAccount(Object o) {
+        Analytics.sendAccountUpdateEvent();
+        updateUserInfoPresenter.sendUpdateUserInfoRequest(edName.getText().toString(),
+                edSrName.getText().toString(), edEmail.getText().toString());
     }
 
     private void initTouchListener() {
@@ -173,13 +185,6 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
         } else {
             tvUpdateAccount.setBackground(getResources().getDrawable(R.drawable.bg_disable_round_corner));
         }
-    }
-
-    @OnClick(R.id.tv_update_account)
-    public void updateAccount() {
-        Analytics.sendAccountUpdateEvent();
-        updateUserInfoPresenter.sendUpdateUserInfoRequest(edName.getText().toString(),
-                edSrName.getText().toString());
     }
 
     @Override

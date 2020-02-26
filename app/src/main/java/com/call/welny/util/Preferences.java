@@ -87,13 +87,14 @@ public class Preferences {
         return gson.fromJson(json, GetUserInfo.class);
     }
 
-    static public void updateUserInfo(Context context, String name, String surname) {
+    static public void updateUserInfo(Context context, String name, String surname, String email) {
         SharedPreferences sharedPref = context.getSharedPreferences(preference_file_key, Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPref.getString(preference_user_info_key, "");
         GetUserInfo getUserInfo =  gson.fromJson(json, GetUserInfo.class);
         getUserInfo.setName(name);
         getUserInfo.setSurname(surname);
+        getUserInfo.setEmail(email);
         setUserInfo(context, getUserInfo);
     }
 
