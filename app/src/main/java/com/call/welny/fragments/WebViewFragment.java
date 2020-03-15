@@ -1,89 +1,137 @@
 package com.call.welny.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.call.welny.R;
-import com.call.welny.util.Links;
+import com.call.welny.log.FileUtils;
+import com.call.welny.presenter.WebViewPresenter;
+import com.call.welny.views.WebSiteView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 @SuppressLint("ValidFragment")
-public class WebViewFragment extends Fragment {
+public class WebViewFragment extends Fragment implements WebSiteView {
 
-    private WebView webView;
-    private ProgressBar progressBar;
+    @BindView(R.id.rl_banner)
+    RelativeLayout rlBanner;
+    @BindView(R.id.tv_header)
+    TextView tvHeader;
+    @BindView(R.id.fy_top_view)
+    FrameLayout topView;
+    @BindView(R.id.webview)
+    WebView webView;
+    @BindView(R.id.progress_circular)
+    ProgressBar progressBar;
+    private Context mContext;
+    private WebViewPresenter webViewPresenter;
+    private String link;
+    private boolean auth;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.web_view, container, false);
-
-        webView = (WebView) view.findViewById(R.id.webview);
-        progressBar = (ProgressBar) view.findViewById(R.id.progress_circular);
+        View view = inflater.inflate(R.layout.about_welny, container, false);
+        ButterKnife.bind(this, view);
+        mContext = view.getContext();
+        webViewPresenter = new WebViewPresenter(getActivity(), this);
+        topView.setVisibility(View.GONE);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            link = bundle.getString("link");
+            auth = bundle.getBoolean("auth");
+            tvHeader.setText(bundle.getString("title"));
+            webViewPresenter.configureBanner(link);
+        }
+        openWebView();
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        openWebView();
-    }
-
     private void openWebView() {
-
         WebSettings webSettings = webView.getSettings();
+        //enable JavaScript in webview
         webSettings.setJavaScriptEnabled(true);
+        //Enable and setup JS localStorage
+        webSettings.setDomStorageEnabled(true);
 
-        //WebViewClientImpl webViewClient = new WebViewClientImpl(this);
-        //webView.setWebViewClient(webViewClient);
+        webView.setWebChromeClient(new WebChromeClient());
+        webView.loadUrl(webViewPresenter.getUrl(link, auth));
 
-        webView.loadUrl(Links.BASE_URL);
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                Log.d("onConsoleMessage", consoleMessage.message());
+                FileUtils.writeFileOnInternalStorage(mContext, consoleMessage.message());
+                return super.onConsoleMessage(consoleMessage);
+            }
+        });
 
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon){
-                // Page loading started
-                // Do something
+                super.onPageStarted(view, url, favicon);
             }
 
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                Log.d("onConsoleMessage", "onReceivedSslError: " + error.getUrl());
                 handler.proceed();
             }
 
             @Override
             public void onPageFinished(WebView view, String url){
-                progressBar.setVisibility(View.GONE);
+                Log.d("onConsoleMessage", "onPageFinished: " + url);
+                super.onPageFinished(view, url);
+                hideProgressBar();
+                FileUtils.writeFileOnInternalStorage(mContext, url);
             }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String url) {
-
-                Log.v("WebViewClientImpl", "url: " + url);
-
-                if(url.indexOf("welny.ru") > -1 ) return false;
-
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
+                Log.d("onConsoleMessage", "shouldOverrideUrlLoading: " + url);
+                webView.loadUrl(url);
                 return true;
             }
         });
+    }
 
+    private void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showBanner() {
+        rlBanner.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideBanner() {
+        rlBanner.setVisibility(View.GONE);
     }
 }

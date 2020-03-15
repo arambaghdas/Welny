@@ -1,0 +1,42 @@
+package com.call.welny.presenter;
+
+import android.app.Activity;
+import android.util.Base64;
+import android.view.View;
+
+import com.call.welny.util.Links;
+import com.call.welny.util.Preferences;
+import com.call.welny.views.WebSiteView;
+
+import java.nio.charset.Charset;
+
+public class WebViewPresenter {
+
+    private Activity activity;
+    private WebSiteView webSiteView;
+
+    public WebViewPresenter(Activity activity, WebSiteView webSiteView) {
+        this.activity = activity;
+        this.webSiteView = webSiteView;
+    }
+
+    public void configureBanner(String link) {
+        if (link.equals(Links.ORDER_MASSAGE_URL)) {
+            webSiteView.hideBanner();
+        } else {
+            webSiteView.showBanner();
+        }
+    }
+
+    public String getUrl(String link, boolean auth) {
+        if (auth) {
+            String value = Preferences.getUserSession(activity);
+            byte[] data = value.getBytes(Charset.forName("UTF-8"));
+            String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+            return link + "/?session=" + base64;
+        } else {
+            return link;
+        }
+    }
+
+}

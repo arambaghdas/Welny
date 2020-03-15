@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
@@ -21,23 +20,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.call.welny.log.FileUtils;
 import com.call.welny.presenter.GetUserInfoPresenter;
-import com.call.welny.util.Links;
-import com.call.welny.util.Preferences;
+import com.call.welny.presenter.WebViewPresenter;
 import com.call.welny.views.UserInfoView;
-
-import java.nio.charset.Charset;
+import com.call.welny.views.WebSiteView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class WebViewActivity extends AppCompatActivity implements UserInfoView {
+public class WebViewActivity extends AppCompatActivity implements UserInfoView, WebSiteView {
 
     private WebView webView;
     private ProgressBar progressBar;
     private String link;
     boolean auth;
     private GetUserInfoPresenter getUserInfoPresenter;
+    private WebViewPresenter webViewPresenter;
 
     @BindView(R.id.rl_arrow_back) RelativeLayout rlArrowBack;
     @BindView(R.id.rl_banner) RelativeLayout rlBanner;
@@ -50,17 +48,13 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
         setContentView(R.layout.about_welny);
         ButterKnife.bind(this);
 
-        Bundle b = getIntent().getExtras();
-        if (b != null) {
-            link = b.getString("link");
-            auth = b.getBoolean("auth");
-            tvHeader.setText(b.getString("title"));
-
-            if (link.equals(Links.ORDER_MASSAGE_URL)) {
-                rlBanner.setVisibility(View.GONE);
-            } else {
-                rlBanner.setVisibility(View.VISIBLE);
-            }
+        webViewPresenter = new WebViewPresenter(this, this);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            link = bundle.getString("link");
+            auth = bundle.getBoolean("auth");
+            tvHeader.setText(bundle.getString("title"));
+            webViewPresenter.configureBanner(link);
         }
 
         webView = (WebView) findViewById(R.id.webview);
@@ -76,19 +70,11 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
         webSettings.setJavaScriptEnabled(true);
         //Enable and setup JS localStorage
         webSettings.setDomStorageEnabled(true);
+        webSettings.setAppCacheEnabled(true);
 
         webView.setWebChromeClient(new WebChromeClient());
-
-        if (auth) {
-            String value = Preferences.getUserSession(this);
-            byte[] data = value.getBytes(Charset.forName("UTF-8"));
-            String base64 = Base64.encodeToString(data, Base64.DEFAULT);
-
-            String newUrl = link + "/?session=" + base64;
-            webView.loadUrl(newUrl);
-        } else {
-            webView.loadUrl(link);
-        }
+        String newURL = webViewPresenter.getUrl(link, auth);
+        webView.loadUrl(newURL);
 
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -115,7 +101,7 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
             public void onPageFinished(WebView view, String url){
                 Log.d("onConsoleMessage", "onPageFinished: " + url);
                 super.onPageFinished(view, url);
-                progressBar.setVisibility(View.GONE);
+                hideProgressBar();
                 FileUtils.writeFileOnInternalStorage(getBaseContext(), url);
             }
 
@@ -126,7 +112,6 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
                 return true;
             }
         });
-
     }
 
     @OnClick(R.id.rl_arrow_back)
@@ -148,18 +133,18 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
     }
 
     private void performOnBack() {
-        progressBar.setVisibility(View.VISIBLE);
+        showProgressBar();
         if (auth) {
             getUserInfoPresenter.sendGetUserRequest();
         } else {
-            progressBar.setVisibility(View.GONE);
+            hideProgressBar();
             super.onBackPressed();
         }
     }
 
     @Override
     public void showToastMessage(String message) {
-        progressBar.setVisibility(View.GONE);
+        hideProgressBar();
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
@@ -170,7 +155,25 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView {
 
     @Override
     public void showGetUserInfoSuccessResponse() {
-        progressBar.setVisibility(View.GONE);
+        hideProgressBar();
         super.onBackPressed();
+    }
+
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showBanner() {
+        rlBanner.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideBanner() {
+        rlBanner.setVisibility(View.GONE);
     }
 }
