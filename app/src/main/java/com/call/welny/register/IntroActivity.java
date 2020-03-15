@@ -13,7 +13,6 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.call.welny.R;
-import com.call.welny.register.VerifyPhoneActivity;
 import com.call.welny.util.Analytics;
 import com.call.welny.util.Preferences;
 import com.google.android.material.tabs.TabLayout;
