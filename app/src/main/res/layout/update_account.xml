@@ -10,6 +10,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:background="@android:color/white">
 
         <RelativeLayout
@@ -324,7 +326,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:gravity="center_vertical"
-                        android:inputType="text"
+                        android:inputType="textEmailAddress"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
@@ -394,6 +396,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_below="@+id/tv_registration_error"
             android:background="@drawable/bg_enable_round_corner"
             android:gravity="center"/>
@@ -401,10 +405,10 @@
         <ProgressBar
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginTop="46dp"
+            android:layout_marginTop="50dp"
+            android:layout_below="@+id/tv_registration_error"
             android:id="@+id/pb_loading"
             android:theme="@style/progressBarWhite"
-            android:layout_below="@+id/tv_registration_error"
             android:visibility="gone"
             android:gravity="center" />
 

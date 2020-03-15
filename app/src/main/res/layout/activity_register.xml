@@ -203,7 +203,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:gravity="center_vertical"
-                        android:inputType="text"
+                        android:inputType="textEmailAddress"
                         android:layout_marginStart="10dp"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"

@@ -1,11 +1,13 @@
 package com.call.welny.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,33 +19,39 @@ import com.call.welny.R;
 import com.call.welny.object.GetUserInfo;
 import com.call.welny.presenter.RegisterPresenter;
 import com.call.welny.presenter.UpdateUserInfoPresenter;
-import com.call.welny.presenter.VerifyCodePresenter;
 import com.call.welny.util.Analytics;
 import com.call.welny.util.Preferences;
-import com.call.welny.views.BaseView;
-import com.call.welny.views.RegisterView;
+import com.call.welny.views.UpdateAccountView;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.santalu.maskedittext.MaskEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 @SuppressLint("ValidFragment")
-public class UpdateAccountFragment extends Fragment implements BaseView {
+public class UpdateAccountFragment extends Fragment implements UpdateAccountView {
 
-    @BindView(R.id.tv_registration_error) TextView tvRegistrationError;
-    @BindView(R.id.tv_update_account) TextView tvUpdateAccount;
-    @BindView(R.id.ed_name) EditText edName;
-    @BindView(R.id.ed_sr_name) EditText edSrName;
-    @BindView(R.id.tv_full_name) TextView tvFullName;
-    @BindView(R.id.tv_credit) TextView tvCredit;
-    @BindView(R.id.ed_phone) MaskEditText edPhone;
-    @BindView(R.id.ed_email) EditText edEmail;
+    @BindView(R.id.tv_registration_error)
+    TextView tvRegistrationError;
+    @BindView(R.id.tv_update_account)
+    TextView tvUpdateAccount;
+    @BindView(R.id.ed_name)
+    EditText edName;
+    @BindView(R.id.ed_sr_name)
+    EditText edSrName;
+    @BindView(R.id.tv_full_name)
+    TextView tvFullName;
+    @BindView(R.id.tv_credit)
+    TextView tvCredit;
+    @BindView(R.id.ed_phone)
+    MaskEditText edPhone;
+    @BindView(R.id.ed_email)
+    EditText edEmail;
+    @BindView(R.id.pb_loading)
+    ProgressBar pbLoading;
     private RegisterPresenter presenter;
-    private VerifyCodePresenter presenterCode;
     private UpdateUserInfoPresenter updateUserInfoPresenter;
     private GetUserInfo getUserInfo;
 
@@ -52,7 +60,6 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
         View view = inflater.inflate(R.layout.update_account, container, false);
         ButterKnife.bind(this, view);
         presenter = new RegisterPresenter(getActivity(), this);
-        presenterCode = new VerifyCodePresenter(getActivity(), this);
         updateUserInfoPresenter = new UpdateUserInfoPresenter(getActivity(), this);
         initValues();
         initObservable();
@@ -61,17 +68,21 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
     }
 
     private void initValues() {
-        getUserInfo = Preferences.getUserInfo(getActivity());
-        if (getUserInfo != null) {
-            edName.setText(getUserInfo.getName());
-            edName.setSelection(getUserInfo.getName().length());
-            edSrName.setText(getUserInfo.getSurname());
-            edEmail.setText(getUserInfo.getEmail());
-            int index = getUserInfo.getPhone().length();
-            edPhone.setText(getUserInfo.getPhone().substring(2, index));
-            tvFullName.setText(getUserInfo.getFullname());
-            String creditStr = getString(R.string.credits).toUpperCase() + " " + getUserInfo.getCredits() + " \u20BD";
-            tvCredit.setText(creditStr);
+        Activity activity = getActivity();
+        if (activity != null) {
+            getUserInfo = Preferences.getUserInfo(activity);
+            if (getUserInfo != null) {
+                edName.setText(getUserInfo.getName());
+                edName.setSelection(getUserInfo.getName().length());
+                edSrName.setText(getUserInfo.getSurname());
+                edEmail.setText(getUserInfo.getEmail());
+                int index = getUserInfo.getPhone().length();
+                edPhone.setText(getUserInfo.getPhone().substring(2, index));
+                tvFullName.setText(getUserInfo.getFullname());
+                String creditStr = getString(R.string.credits).toUpperCase() + " " + getUserInfo.getCredits() + " \u20BD";
+                tvCredit.setText(creditStr);
+                hideFocus();
+            }
         }
     }
 
@@ -151,17 +162,22 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
 
     @Override
     public void showErrorResponse(String message) {
+        hideFocus();
         tvRegistrationError.setText(message);
     }
 
     @Override
     public void showSuccessResponse(String message) {
-        getUserInfo = Preferences.getUserInfo(getActivity());
-        if (getUserInfo != null) {
-            edName.setText(getUserInfo.getName());
-            edName.setSelection(getUserInfo.getName().length());
-            edSrName.setText(getUserInfo.getSurname());
-            tvFullName.setText(getUserInfo.getFullname());
+        Activity activity = getActivity();
+        if (activity != null) {
+            getUserInfo = Preferences.getUserInfo(activity);
+            if (getUserInfo != null) {
+                edName.setText(getUserInfo.getName());
+                edName.setSelection(getUserInfo.getName().length());
+                edSrName.setText(getUserInfo.getSurname());
+                tvFullName.setText(getUserInfo.getFullname());
+                hideFocus();
+            }
         }
     }
 
@@ -169,7 +185,7 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
     public void enableRegistration() {
         tvUpdateAccount.setEnabled(true);
         final int sdk = android.os.Build.VERSION.SDK_INT;
-        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+        if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
             tvUpdateAccount.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_enable_round_corner));
         } else {
             tvUpdateAccount.setBackground(getResources().getDrawable(R.drawable.bg_enable_round_corner));
@@ -180,7 +196,7 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
     public void disableRegistration() {
         tvUpdateAccount.setEnabled(false);
         final int sdk = android.os.Build.VERSION.SDK_INT;
-        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+        if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
             tvUpdateAccount.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_disable_round_corner));
         } else {
             tvUpdateAccount.setBackground(getResources().getDrawable(R.drawable.bg_disable_round_corner));
@@ -195,5 +211,22 @@ public class UpdateAccountFragment extends Fragment implements BaseView {
     @Override
     public void hideErrorView() {
         tvRegistrationError.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showProgressBar() {
+        pbLoading.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        pbLoading.setVisibility(View.GONE);
+    }
+
+
+    public void hideFocus() {
+        edName.clearFocus();
+        edSrName.clearFocus();
+        edEmail.clearFocus();
     }
 }
