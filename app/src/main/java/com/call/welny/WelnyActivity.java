@@ -1,12 +1,12 @@
 package com.call.welny;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +26,7 @@ import com.call.welny.fragments.OrderWelnyFragment;
 import com.call.welny.fragments.SupportFragment;
 import com.call.welny.fragments.TryWelnyFragment;
 import com.call.welny.fragments.UpdateAccountFragment;
+import com.call.welny.fragments.WebViewFragment;
 import com.call.welny.log.LogsActivity;
 import com.call.welny.object.GetUserInfo;
 import com.call.welny.presenter.GetUserInfoPresenter;
@@ -42,6 +43,7 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
     private GetUserInfoPresenter presenter;
     private TextView tvFullName, tvCredit;
     private DrawerLayout navDrawer;
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
 
         RelativeLayout menuIcon = findViewById(R.id.rl_menu);
         navDrawer = findViewById(R.id.drawer_layout);
+
         TextView textViewOrder = findViewById(R.id.tv_order);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -70,6 +73,15 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
 
         navDrawer.setVisibility(View.GONE);
         menuIcon.setOnClickListener(view -> {
+            closeKeyBoard();
+
+            boolean isAccountFragment = currentFragment != null &&
+                    currentFragment instanceof UpdateAccountFragment;
+
+            if (isAccountFragment) {
+                ((UpdateAccountFragment )currentFragment).hideFocus();
+            }
+
             if (navDrawer.isDrawerOpen(GravityCompat.START)) {
                 navDrawer.closeDrawer(GravityCompat.START);
             } else {
@@ -88,40 +100,39 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
                 linearLayoutWelnyPlus.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
                     Analytics.sendMenuWelnyPlusEvent();
-                    Fragment second;
                     String tag;
 
                     if (getUserInfo != null && getUserInfo.getCustomerPackage() != null) {
-                        second = new OrderWelnyFragment();
+                        currentFragment = new OrderWelnyFragment();
                         tag = "OrderWelnyFragment";
                     } else {
-                        second = new TryWelnyFragment();
+                        currentFragment = new TryWelnyFragment();
                         tag = "TryWelnyFragment";
                     }
-                    addToBackStuck(second, tag, false);
+                    addToBackStuck(currentFragment, tag, false);
                 });
 
                 LinearLayout linearLayoutInviteFriends = findViewById(R.id.ly_invite_friends);
                 linearLayoutInviteFriends.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
                     Analytics.sendMenuInviteEvent();
-                    final Fragment second = new InviteFriendFragment();
+                    currentFragment = new InviteFriendFragment();
                     String tag = "InviteFriendFragment";
-                    addToBackStuck(second, tag, false);
+                    addToBackStuck(currentFragment, tag, false);
                 });
 
                 LinearLayout linearLayoutOrders = findViewById(R.id.ly_orders);
                 linearLayoutOrders.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
                     Analytics.sendMenuOrdersEvent();
-                    SystemClock.sleep(500);
 
-                    Intent intent = new Intent(this, WebViewActivity.class);
-                    Bundle b1 = new Bundle();
-                    b1.putString("link", Links.BOOKINGS_URL);
-                    b1.putBoolean("auth", true);
-                    intent.putExtras(b1);
-                    startActivity(intent);
+                    currentFragment = new WebViewFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("link", Links.BOOKINGS_URL);
+                    bundle.putBoolean("auth", true);
+                    currentFragment.setArguments(bundle);
+                    String tag = "WebViewFragment";
+                    addToBackStuck(currentFragment, tag, false);
 
                 });
 
@@ -129,25 +140,25 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
                 linearLayoutAccount.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
                     Analytics.sendMenuAccountEvent();
-                    final Fragment second = new UpdateAccountFragment();
+                    currentFragment = new UpdateAccountFragment();
                     String tag = "UpdateAccountFragment";
-                    addToBackStuck(second, tag, false);
+                    addToBackStuck(currentFragment, tag, false);
                 });
 
                 LinearLayout linearLayoutSupport = findViewById(R.id.ly_support);
                 linearLayoutSupport.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
                     Analytics.sendMenuSupportEvent();
-                    final Fragment second = new SupportFragment();
+                    currentFragment = new SupportFragment();
                     String tag = "SupportFragment";
-                    addToBackStuck(second, tag, false);
+                    addToBackStuck(currentFragment, tag, false);
                 });
 
                 textViewOrder.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
-                    final Fragment second = new MassageTypesFragment();
+                    currentFragment = new MassageTypesFragment();
                     String tag = "MassageTypesFragment";
-                    addToBackStuck(second, tag,false);
+                    addToBackStuck(currentFragment, tag,false);
                 });
 
                 LinearLayout linearLayoutExit = findViewById(R.id.ly_exit);
@@ -161,9 +172,9 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
             }
         });
 
-        final Fragment second = new MassageTypesFragment();
+        currentFragment = new MassageTypesFragment();
         String tag = "MassageTypesFragment";
-        addToBackStuck(second, tag,false);
+        addToBackStuck(currentFragment, tag,false);
 
         presenter = new GetUserInfoPresenter(this, this);
     }
@@ -237,6 +248,17 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
         }
         fragmentTransaction.replace(R.id.layout, second, tag);
         fragmentTransaction.commit();
+    }
+
+    private void closeKeyBoard(){
+        View view = this.getCurrentFocus();
+        if (view != null){
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
     }
 
 }

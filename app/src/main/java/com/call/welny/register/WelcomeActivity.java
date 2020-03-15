@@ -3,7 +3,6 @@ package com.call.welny.register;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.call.welny.R;
