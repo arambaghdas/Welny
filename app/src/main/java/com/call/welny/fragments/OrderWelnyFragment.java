@@ -19,6 +19,11 @@ import com.call.welny.object.GetUserInfo;
 import com.call.welny.object.PackageResponse;
 import com.call.welny.util.Preferences;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 @SuppressLint("ValidFragment")
 public class OrderWelnyFragment extends Fragment implements View.OnClickListener {
 
@@ -39,18 +44,33 @@ public class OrderWelnyFragment extends Fragment implements View.OnClickListener
         if (userInfo != null) {
             CustomerPackage customerPackage = userInfo.getCustomerPackage();
             if (customerPackage != null) {
-                textViewStartDate.setText(customerPackage.getSubmissionTime());
-                textViewEndDate.setText(customerPackage.getExpirationTime());
+                textViewStartDate.setText(formatDate(customerPackage.getSubmissionTime()));
+                textViewEndDate.setText(formatDate(customerPackage.getExpirationTime()));
                 textViewDuration.setText(String.valueOf(customerPackage.getHoursLeft()));
                 PackageResponse packageResponse = customerPackage.getPackageResponse();
                 if (packageResponse != null) {
-                    textViewTitle.setText(packageResponse.getTitle());
+                    String title = getString(R.string.welny_plus) + " " +
+                            packageResponse.getTitle();
+                    textViewTitle.setText(title);
                 }
             }
         }
 
-
         return view;
+    }
+
+    private String formatDate(String date) {
+        try {
+            SimpleDateFormat formatDateTime = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
+            SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+            Date newDate = formatDateTime.parse(date);
+            if (newDate != null) {
+                return formatDate.format(newDate);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
     @Override
