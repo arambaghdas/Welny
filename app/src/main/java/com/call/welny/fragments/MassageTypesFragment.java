@@ -36,7 +36,7 @@ public class MassageTypesFragment extends Fragment {
             Analytics.sendMainSingleEvent();
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
             Bundle b1 = new Bundle();
-            b1.putString("link", Links.ORDER_MASSAGE_URL);
+            b1.putString("link", Links.SINGLE_ORDER_MASSAGE_URL);
             b1.putBoolean("auth", true);
             intent.putExtras(b1);
             startActivity(intent);
@@ -46,7 +46,7 @@ public class MassageTypesFragment extends Fragment {
             Analytics.sendMainDoubleEvent();
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
             Bundle b1 = new Bundle();
-            b1.putString("link", Links.ORDER_MASSAGE_URL);
+            b1.putString("link", Links.COUPLE_ORDER_MASSAGE_URL);
             b1.putBoolean("auth", true);
             intent.putExtras(b1);
             startActivity(intent);

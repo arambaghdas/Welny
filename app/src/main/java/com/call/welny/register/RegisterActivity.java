@@ -115,8 +115,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView,
 
     @OnClick(R.id.fy_top_view)
     public void openLogs() {
-        Intent intent = new Intent(this, LogsActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, LogsActivity.class);
+        //startActivity(intent);
     }
 
     @Override

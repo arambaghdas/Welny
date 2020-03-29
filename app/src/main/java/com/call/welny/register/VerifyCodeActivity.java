@@ -135,8 +135,8 @@ public class VerifyCodeActivity extends AppCompatActivity implements RegisterVie
 
     @OnClick(R.id.fy_top_view)
     public void openLogs() {
-        Intent intent = new Intent(this, LogsActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, LogsActivity.class);
+        //startActivity(intent);
     }
 
     @OnClick(R.id.tv_get_code)

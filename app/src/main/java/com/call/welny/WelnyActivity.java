@@ -2,9 +2,11 @@ package com.call.welny;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
@@ -44,6 +46,7 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
     private TextView tvFullName, tvCredit;
     private DrawerLayout navDrawer;
     private Fragment currentFragment;
+    private RelativeLayout rlNavDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
 
         RelativeLayout menuIcon = findViewById(R.id.rl_menu);
         navDrawer = findViewById(R.id.drawer_layout);
+        rlNavDrawer = findViewById(R.id.rl_nav_drawer);
 
         TextView textViewOrder = findViewById(R.id.tv_order);
 
@@ -181,8 +185,8 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
 
     @OnClick(R.id.fy_top_view)
     public void openLogs() {
-        Intent intent = new Intent(this, LogsActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, LogsActivity.class);
+        //startActivity(intent);
     }
 
     @Override
@@ -259,6 +263,16 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        Rect viewRect = new Rect();
+        rlNavDrawer.getGlobalVisibleRect(viewRect);
+        if (!viewRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+            navDrawer.closeDrawers();
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
 }

@@ -21,7 +21,7 @@ public class WebViewPresenter {
     }
 
     public void configureBanner(String link) {
-        if (link.equals(Links.ORDER_MASSAGE_URL)) {
+        if (link.equals(Links.SINGLE_ORDER_MASSAGE_URL) || link.equals(Links.COUPLE_ORDER_MASSAGE_URL) ) {
             webSiteView.hideBanner();
         } else {
             webSiteView.showBanner();

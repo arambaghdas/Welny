@@ -125,11 +125,11 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView, 
     }
 
     private void navigateBack() {
-        if (webView.canGoBack()) {
-            webView.goBack();
-        } else {
+       // if (webView.canGoBack()) {
+       //     webView.goBack();
+       // } else {
             performOnBack();
-        }
+       // }
     }
 
     private void performOnBack() {
