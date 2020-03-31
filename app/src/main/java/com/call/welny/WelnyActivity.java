@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +28,6 @@ import com.call.welny.fragments.SupportFragment;
 import com.call.welny.fragments.TryWelnyFragment;
 import com.call.welny.fragments.UpdateAccountFragment;
 import com.call.welny.fragments.WebViewFragment;
-import com.call.welny.log.LogsActivity;
 import com.call.welny.object.GetUserInfo;
 import com.call.welny.presenter.GetUserInfoPresenter;
 import com.call.welny.register.VerifyPhoneActivity;
@@ -47,6 +45,7 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
     private DrawerLayout navDrawer;
     private Fragment currentFragment;
     private RelativeLayout rlNavDrawer;
+    public static final int WEBVIEW_ACTIVITY_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,16 +127,7 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
                 LinearLayout linearLayoutOrders = findViewById(R.id.ly_orders);
                 linearLayoutOrders.setOnClickListener(v -> {
                     navDrawer.closeDrawer(GravityCompat.START);
-                    Analytics.sendMenuOrdersEvent();
-
-                    currentFragment = new WebViewFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("link", Links.BOOKINGS_URL);
-                    bundle.putBoolean("auth", true);
-                    currentFragment.setArguments(bundle);
-                    String tag = "WebViewFragment";
-                    addToBackStuck(currentFragment, tag, false);
-
+                    showOrders();
                 });
 
                 LinearLayout linearLayoutAccount = findViewById(R.id.ly_account);
@@ -183,6 +173,18 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
         presenter = new GetUserInfoPresenter(this, this);
     }
 
+    public void showOrders() {
+        Analytics.sendMenuOrdersEvent();
+
+        currentFragment = new WebViewFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("link", Links.BOOKINGS_URL);
+        bundle.putBoolean("auth", true);
+        currentFragment.setArguments(bundle);
+        String tag = "WebViewFragment";
+        addToBackStuck(currentFragment, tag, false);
+    }
+
     @OnClick(R.id.fy_top_view)
     public void openLogs() {
         //Intent intent = new Intent(this, LogsActivity.class);
@@ -202,17 +204,6 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
-    }
-
-
-    @Override
-    public void showGetUserInfoSuccessResponse() {
-
-    }
-
-    @Override
-    public void showGetUserInfoFailResponse() {
-
     }
 
     @Override
@@ -251,7 +242,7 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
             fragmentTransaction.addToBackStack(tag);
         }
         fragmentTransaction.replace(R.id.layout, second, tag);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     private void closeKeyBoard(){
@@ -273,6 +264,13 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
             navDrawer.closeDrawers();
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == WEBVIEW_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            showOrders();
+        }
     }
 
 }

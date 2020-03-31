@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
+import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -19,6 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,14 +28,16 @@ import androidx.fragment.app.Fragment;
 
 import com.call.welny.R;
 import com.call.welny.log.FileUtils;
+import com.call.welny.presenter.GetUserInfoPresenter;
 import com.call.welny.presenter.WebViewPresenter;
+import com.call.welny.views.UserInfoView;
 import com.call.welny.views.WebSiteView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 @SuppressLint("ValidFragment")
-public class WebViewFragment extends Fragment implements WebSiteView {
+public class WebViewFragment extends Fragment implements UserInfoView, WebSiteView {
 
     @BindView(R.id.rl_banner)
     RelativeLayout rlBanner;
@@ -49,6 +53,7 @@ public class WebViewFragment extends Fragment implements WebSiteView {
     private WebViewPresenter webViewPresenter;
     private String link;
     private boolean auth;
+    private GetUserInfoPresenter getUserInfoPresenter;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -57,6 +62,7 @@ public class WebViewFragment extends Fragment implements WebSiteView {
         ButterKnife.bind(this, view);
         mContext = view.getContext();
         webViewPresenter = new WebViewPresenter(getActivity(), this);
+        getUserInfoPresenter = new GetUserInfoPresenter(getActivity(), this);
         topView.setVisibility(View.GONE);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -77,6 +83,8 @@ public class WebViewFragment extends Fragment implements WebSiteView {
         webSettings.setDomStorageEnabled(true);
 
         webView.setWebChromeClient(new WebChromeClient());
+
+        webView.addJavascriptInterface(new WebAppInterface(mContext), "Android");
         webView.loadUrl(webViewPresenter.getUrl(link, auth));
 
         webView.setWebChromeClient(new WebChromeClient() {
@@ -133,5 +141,23 @@ public class WebViewFragment extends Fragment implements WebSiteView {
     @Override
     public void hideBanner() {
         rlBanner.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+    }
+
+    public class WebAppInterface {
+        Context mContext;
+
+        WebAppInterface(Context c) {
+            mContext = c;
+        }
+
+        @JavascriptInterface
+        public void bookingCanceled() {
+            getUserInfoPresenter.sendGetUserRequest();
+        }
     }
 }

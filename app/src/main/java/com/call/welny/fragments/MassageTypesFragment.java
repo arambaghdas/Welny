@@ -7,11 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,6 +17,7 @@ import com.call.welny.R;
 import com.call.welny.WebViewActivity;
 import com.call.welny.util.Analytics;
 import com.call.welny.util.Links;
+import static com.call.welny.WelnyActivity.WEBVIEW_ACTIVITY_REQUEST_CODE;
 
 @SuppressLint("ValidFragment")
 public class MassageTypesFragment extends Fragment {
@@ -39,7 +37,7 @@ public class MassageTypesFragment extends Fragment {
             b1.putString("link", Links.SINGLE_ORDER_MASSAGE_URL);
             b1.putBoolean("auth", true);
             intent.putExtras(b1);
-            startActivity(intent);
+            getActivity().startActivityForResult(intent, WEBVIEW_ACTIVITY_REQUEST_CODE);
         });
 
         imageViewType2.setOnClickListener(v -> {
@@ -49,7 +47,7 @@ public class MassageTypesFragment extends Fragment {
             b1.putString("link", Links.COUPLE_ORDER_MASSAGE_URL);
             b1.putBoolean("auth", true);
             intent.putExtras(b1);
-            startActivity(intent);
+            getActivity().startActivityForResult(intent, WEBVIEW_ACTIVITY_REQUEST_CODE);
         });
 
         imageViewType3.setOnClickListener(v -> {
@@ -58,7 +56,7 @@ public class MassageTypesFragment extends Fragment {
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
             fragmentTransaction.replace(R.id.layout, second);
-            fragmentTransaction.commit();
+            fragmentTransaction.commitAllowingStateLoss();
         });
 
         return view;

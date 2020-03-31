@@ -56,6 +56,6 @@ public class TryWelnyFragment extends Fragment implements View.OnClickListener {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.layout, second);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 }

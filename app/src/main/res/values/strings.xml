@@ -91,5 +91,7 @@
     <string name="user_agreement">пользовательского соглашения</string>
     <string name="user_confidential">политики конфиденциальности</string>
     <string name="promo_code_share">Ваш промо-код скопирован в буфер обмена</string>
+    <string name="promo_code_invite_friend_title">Попробуйте сервис Welny.</string>
+    <string name="promo_code_invite_friend">Приложение, которое позволяет массажистам и клиентам найти друг друга быстро и без дополнительных поездок в салоны. Внизу твой промокод на скидку в 300 рублей:</string>
 
 </resources>

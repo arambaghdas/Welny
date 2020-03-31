@@ -1,12 +1,15 @@
 package com.call.welny;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
+import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -73,6 +76,7 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView, 
         webSettings.setAppCacheEnabled(true);
 
         webView.setWebChromeClient(new WebChromeClient());
+        webView.addJavascriptInterface(new WebAppInterface(this), "Android");
         String newURL = webViewPresenter.getUrl(link, auth);
         webView.loadUrl(newURL);
 
@@ -116,7 +120,7 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView, 
 
     @OnClick(R.id.rl_arrow_back)
     public void onBack() {
-        navigateBack();
+        performOnBack();
     }
 
     @Override
@@ -125,11 +129,11 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView, 
     }
 
     private void navigateBack() {
-       // if (webView.canGoBack()) {
-       //     webView.goBack();
-       // } else {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
             performOnBack();
-       // }
+        }
     }
 
     private void performOnBack() {
@@ -175,5 +179,21 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView, 
     @Override
     public void hideBanner() {
         rlBanner.setVisibility(View.GONE);
+    }
+
+    public class WebAppInterface {
+        Context mContext;
+
+        WebAppInterface(Context c) {
+            mContext = c;
+        }
+
+        @JavascriptInterface
+        public void bookingCreated() {
+            getUserInfoPresenter.sendGetUserRequest();
+            Intent output = new Intent();
+            setResult(RESULT_OK, output);
+            finish();
+        }
     }
 }
