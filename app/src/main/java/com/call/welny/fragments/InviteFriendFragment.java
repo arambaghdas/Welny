@@ -53,7 +53,10 @@ public class InviteFriendFragment extends Fragment {
             share.setType("text/plain");
             share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 
-            String promoCodeStr = getString(R.string.promo_code) + " " + promoCode + " " + Links.BASE_URL;
+            String promoCodeStr = getString(R.string.promo_code_invite_friend_title) +
+                    "(" + Links.BASE_URL_SHARE + ")." + "\n" +
+                    getString(R.string.promo_code_invite_friend) +
+                    "\n" + promoCode;
             //share.putExtra(Intent.EXTRA_SUBJECT, promoCodeStr);
             share.putExtra(Intent.EXTRA_TEXT, promoCodeStr);
             startActivity(Intent.createChooser(share, getString(R.string.share_promo_code)));
