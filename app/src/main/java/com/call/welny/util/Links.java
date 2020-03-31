@@ -2,6 +2,7 @@ package com.call.welny.util;
 
 public class Links {
 
+    static public String BASE_URL_SHARE = "https://welny.ru";
     static public String BASE_URL = "https://welny.ru/";
     static public String URL_ABOUT = BASE_URL + "aboutw/mobile.html";
     static public String URL_FAQ = BASE_URL + "faq/mobile.html";
@@ -13,6 +14,8 @@ public class Links {
     static public String BOOKINGS_URL = BASE_URL_MOBILE + "bookings";
     //static public String SINGLE_ORDER_MASSAGE_URL = BASE_URL_MOBILE + "booking?serviceType=1";
     //static public String COUPLE_ORDER_MASSAGE_URL = BASE_URL_MOBILE + "booking?serviceType=2";
+    //static public String SINGLE_ORDER_MASSAGE_TYPE = "?serviceType=1";
+    //static public String COUPLE_ORDER_MASSAGE_TYPE = "?serviceType=2";
     static public String SINGLE_ORDER_MASSAGE_URL = BASE_URL_MOBILE + "booking";
     static public String COUPLE_ORDER_MASSAGE_URL = BASE_URL_MOBILE + "booking";
     static public String PHONE_NUMBER = "+74954450739";
