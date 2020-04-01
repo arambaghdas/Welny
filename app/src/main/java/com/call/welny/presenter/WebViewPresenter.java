@@ -30,17 +30,13 @@ public class WebViewPresenter {
             String value = Preferences.getUserSession(activity);
             byte[] data = value.getBytes(Charset.forName("UTF-8"));
             String base64 = Base64.encodeToString(data, Base64.DEFAULT);
-            /*
             if (link.equals(Links.SINGLE_ORDER_MASSAGE_URL)) {
-                return ORDER_MASSAGE_URL + "/?session=" + base64 + SINGLE_ORDER_MASSAGE_TYPE;
+                return link + "&session=" + base64;
             } else if (link.equals(Links.COUPLE_ORDER_MASSAGE_URL)) {
-                return ORDER_MASSAGE_URL + "/?session=" + base64 + COUPLE_ORDER_MASSAGE_TYPE;
+                return link + "&session=" + base64;
             } else {
                 return link + "/?session=" + base64;
             }
-            */
-            return link + "/?session=" + base64;
-
         } else {
             return link;
         }
