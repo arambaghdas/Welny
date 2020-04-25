@@ -207,6 +207,11 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
     }
 
     @Override
+    public void sessionExpire() {
+        performLogOut();
+    }
+
+    @Override
     public void onBackPressed() {
         if (navDrawer.isDrawerOpen(GravityCompat.START)) {
             navDrawer.closeDrawer(GravityCompat.START);

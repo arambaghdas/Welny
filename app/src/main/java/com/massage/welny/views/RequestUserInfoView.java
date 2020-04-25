@@ -5,4 +5,5 @@ public interface RequestUserInfoView {
     void onGetUserFailResponse(String message);
     void onLogOutSuccessResponse(String message);
     void onLogOutFailResponse(String message);
+    void onSessionExpireResponse(String message);
 }

@@ -118,4 +118,14 @@ public class Analytics {
         YandexMetrica.reportEvent("invite_copy");
         Log.v("Analytics", "invite_copy");
     }
+
+    public static void sendOrderConfirmedEvent() {
+        YandexMetrica.reportEvent("order_confirmed");
+        Log.v("Analytics", "order_confirmed");
+    }
+
+    public static void sendOrderCanceledEvent() {
+        YandexMetrica.reportEvent("order_canceled");
+        Log.v("Analytics", "order_canceled");
+    }
 }

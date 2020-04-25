@@ -27,9 +27,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.massage.welny.R;
+import com.massage.welny.WelnyActivity;
 import com.massage.welny.log.FileUtils;
 import com.massage.welny.presenter.GetUserInfoPresenter;
 import com.massage.welny.presenter.WebViewPresenter;
+import com.massage.welny.util.Analytics;
 import com.massage.welny.views.UserInfoView;
 import com.massage.welny.views.WebSiteView;
 
@@ -148,6 +150,14 @@ public class WebViewFragment extends Fragment implements UserInfoView, WebSiteVi
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void sessionExpire() {
+        WelnyActivity activity = (WelnyActivity) getActivity();
+        if (activity != null) {
+            activity.sessionExpire();
+        }
+    }
+
     public class WebAppInterface {
         Context mContext;
 
@@ -157,6 +167,7 @@ public class WebViewFragment extends Fragment implements UserInfoView, WebSiteVi
 
         @JavascriptInterface
         public void bookingCanceled() {
+            Analytics.sendOrderCanceledEvent();
             getUserInfoPresenter.sendGetUserRequest();
         }
     }

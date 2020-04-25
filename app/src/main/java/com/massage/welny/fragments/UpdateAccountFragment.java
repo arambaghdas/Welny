@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.massage.welny.R;
+import com.massage.welny.WelnyActivity;
 import com.massage.welny.object.GetUserInfo;
 import com.massage.welny.presenter.RegisterPresenter;
 import com.massage.welny.presenter.UpdateUserInfoPresenter;
@@ -223,6 +224,13 @@ public class UpdateAccountFragment extends Fragment implements UpdateAccountView
         pbLoading.setVisibility(View.GONE);
     }
 
+    @Override
+    public void sessionExpire() {
+        WelnyActivity activity = (WelnyActivity) getActivity();
+        if (activity != null) {
+            activity.sessionExpire();
+        }
+    }
 
     public void hideFocus() {
         edName.clearFocus();

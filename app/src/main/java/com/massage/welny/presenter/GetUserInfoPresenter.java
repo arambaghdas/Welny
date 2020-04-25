@@ -56,4 +56,10 @@ public class GetUserInfoPresenter implements RequestUserInfoView {
          userInfo.showGetUserInfoFailResponse();
          userInfo.showToastMessage(message);
     }
+
+    @Override
+    public void onSessionExpireResponse(String message) {
+        userInfo.showToastMessage(message);
+        userInfo.sessionExpire();
+    }
 }

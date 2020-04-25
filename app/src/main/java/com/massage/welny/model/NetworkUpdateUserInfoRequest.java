@@ -8,6 +8,7 @@ import com.massage.welny.R;
 import com.massage.welny.log.FileUtils;
 import com.massage.welny.object.AccountResponse;
 import com.massage.welny.object.AccountErrorResponse;
+import com.massage.welny.object.ErrorResponse;
 import com.massage.welny.util.Preferences;
 import com.massage.welny.views.RequestUpdateUserInfoView;
 import com.google.gson.Gson;
@@ -70,10 +71,16 @@ public class NetworkUpdateUserInfoRequest {
 
                         if (res.contains("error")) {
                             AccountErrorResponse loginErrorResponse = new Gson().fromJson(res, AccountErrorResponse.class);
-                            if (loginErrorResponse.getError() == null) {
+                            ErrorResponse errorResponse = loginErrorResponse.getError();
+                            if (errorResponse == null) {
                                 requestView.onUpdateFailUserInfoResponse(activity.getString(R.string.update_account_failed));
                             } else {
-                                requestView.onUpdateFailUserInfoResponse(loginErrorResponse.getError().getMessage());
+                                String message = errorResponse.getMessage();
+                                if (errorResponse.getCode() == 11) {
+                                    requestView.onSessionExpireResponse(message);
+                                } else {
+                                    requestView.onUpdateFailUserInfoResponse(errorResponse.getMessage());
+                                }
                             }
                         } else {
                             AccountResponse getUserInfo = new Gson().fromJson(res, AccountResponse.class);

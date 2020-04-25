@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.massage.welny.R;
 import com.massage.welny.log.FileUtils;
+import com.massage.welny.object.ErrorResponse;
 import com.massage.welny.object.GetUserResponse;
 import com.massage.welny.object.AccountResponse;
 import com.massage.welny.object.AccountErrorResponse;
@@ -67,10 +68,16 @@ public class NetworkUserInfoRequest {
 
                         if (res.contains("error")) {
                             AccountErrorResponse loginErrorResponse = new Gson().fromJson(res, AccountErrorResponse.class);
-                            if (loginErrorResponse.getError() == null) {
+                            ErrorResponse errorResponse = loginErrorResponse.getError();
+                            if (errorResponse == null) {
                                 requestView.onGetUserFailResponse(activity.getString(R.string.verify_code_failed));
                             } else {
-                                requestView.onGetUserFailResponse(loginErrorResponse.getError().getMessage());
+                                String message = errorResponse.getMessage();
+                                if (errorResponse.getCode() == 11) {
+                                    requestView.onSessionExpireResponse(message);
+                                } else {
+                                    requestView.onGetUserFailResponse(message);
+                                }
                             }
                         } else {
                             GetUserResponse getUserInfo = new Gson().fromJson(res, GetUserResponse.class);
@@ -148,10 +155,16 @@ public class NetworkUserInfoRequest {
 
                         if (res.contains("error")) {
                             AccountErrorResponse loginErrorResponse = new Gson().fromJson(res, AccountErrorResponse.class);
-                            if (loginErrorResponse.getError() == null) {
+                            ErrorResponse errorResponse = loginErrorResponse.getError();
+                            if (errorResponse == null) {
                                 requestView.onLogOutFailResponse(activity.getString(R.string.log_out_failed));
                             } else {
-                                requestView.onLogOutFailResponse(loginErrorResponse.getError().getMessage());
+                                String message = errorResponse.getMessage();
+                                if (errorResponse.getCode() == 11) {
+                                    requestView.onLogOutSuccessResponse(message);
+                                } else {
+                                    requestView.onLogOutFailResponse(message);
+                                }
                             }
                         } else {
                             AccountResponse getUserInfo = new Gson().fromJson(res, AccountResponse.class);

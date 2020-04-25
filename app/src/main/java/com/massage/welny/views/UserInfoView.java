@@ -5,4 +5,5 @@ public interface UserInfoView {
     default void showGetUserInfoSuccessResponse() {}
     default void showGetUserInfoFailResponse() {}
     default void performLogOut() { }
+    default void sessionExpire() {}
 }

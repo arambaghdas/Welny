@@ -24,6 +24,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.massage.welny.log.FileUtils;
 import com.massage.welny.presenter.GetUserInfoPresenter;
 import com.massage.welny.presenter.WebViewPresenter;
+import com.massage.welny.register.VerifyPhoneActivity;
+import com.massage.welny.util.Analytics;
+import com.massage.welny.util.Preferences;
 import com.massage.welny.views.UserInfoView;
 import com.massage.welny.views.WebSiteView;
 
@@ -158,6 +161,16 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView, 
     }
 
     @Override
+    public void sessionExpire() {
+        Preferences.clearUserSession(this);
+        Preferences.setUserInfo(this, null);
+        Intent intent = new Intent(this, VerifyPhoneActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     public void showGetUserInfoSuccessResponse() {
         hideProgressBar();
         super.onBackPressed();
@@ -190,6 +203,7 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView, 
 
         @JavascriptInterface
         public void bookingCreated() {
+            Analytics.sendOrderConfirmedEvent();
             getUserInfoPresenter.sendGetUserRequest();
             Intent output = new Intent();
             setResult(RESULT_OK, output);

@@ -42,4 +42,11 @@ public class UpdateUserInfoPresenter implements RequestUpdateUserInfoView {
         updateAccountView.showToastMessage(message);
         updateAccountView.hideProgressBar();
     }
+
+    @Override
+    public void onSessionExpireResponse(String message) {
+        updateAccountView.showToastMessage(message);
+        updateAccountView.hideProgressBar();
+        updateAccountView.sessionExpire();
+    }
 }

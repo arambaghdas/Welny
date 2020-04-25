@@ -2,14 +2,18 @@
 package com.massage.welny;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.multidex.MultiDex;
 
 import com.yandex.metrica.AppMetricaDeviceIDListener;
 import com.yandex.metrica.YandexMetrica;
 import com.yandex.metrica.YandexMetricaConfig;
+
+import im.getsocial.sdk.GetSocial;
 
 import static com.massage.welny.util.Constants.APP_METRIC_KEY;
 
@@ -42,6 +46,12 @@ public class WelnyApplication extends Application {
             }
         });
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        MultiDex.install(this);
     }
 
     public static WelnyApplication getInstance() {
