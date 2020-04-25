@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.call.welny">
+    package="com.massage.welny">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,14 +9,14 @@
 
     <application
         android:allowBackup="false"
-        android:name=".WelnyApplication"
+        android:name="com.massage.welny.WelnyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".register.WelcomeActivity">
+        <activity android:name="com.massage.welny.register.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,49 +25,49 @@
         </activity>
 
         <activity
-            android:name="com.call.welny.WelnyActivity"
+            android:name="com.massage.welny.WelnyActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.call.welny.ZoneCloseActivity"
+            android:name="com.massage.welny.ZoneCloseActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.call.welny.log.LogsActivity"
+            android:name="com.massage.welny.log.LogsActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.call.welny.register.IntroActivity"
+            android:name="com.massage.welny.register.IntroActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.call.welny.register.VerifyPhoneActivity"
+            android:name="com.massage.welny.register.VerifyPhoneActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
 
         <activity
-            android:name="com.call.welny.register.RegisterActivity"
+            android:name="com.massage.welny.register.RegisterActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
 
         <activity
-            android:name="com.call.welny.register.VerifyCodeActivity"
+            android:name="com.massage.welny.register.VerifyCodeActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
 
         <activity
-            android:name="com.call.welny.WebViewActivity"
+            android:name="com.massage.welny.WebViewActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait" />
 
