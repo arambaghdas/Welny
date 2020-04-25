@@ -1,21 +1,39 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'im.getsocial'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.call.welny"
+        applicationId "com.massage.welny"
         minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            signingConfigs {
+                releaseConfig {
+                    keyAlias 'welny_keystore'
+                    keyPassword 'NDG43AByasDEF78ASYUI'
+                    storeFile file('welny_keystore.jks')
+                    storeFile file('../app/welny_keystore.jks')
+                    storePassword 'NDG43AByasDEF78ASYUI'
+                }
+            }
+
         }
+    }
+
+    getsocial {
+        appId "bg88U7M868N02"
     }
 
     compileOptions {
@@ -26,21 +44,20 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
-    implementation "io.reactivex.rxjava2:rxjava:2.2.8"
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
     implementation 'com.github.santalu:mask-edittext:1.1.1'
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.yandex.android:mobmetricalib:3.2.2'
+    implementation 'com.google.firebase:firebase-messaging:20.1.6'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

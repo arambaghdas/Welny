@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "773156085891",
+    "firebase_url": "https://welny-6a4f8.firebaseio.com",
+    "project_id": "welny-6a4f8",
+    "storage_bucket": "welny-6a4f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773156085891:android:bf6fb3369d0fc49fa8bbb6",
+        "android_client_info": {
+          "package_name": "com.massage.welny"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773156085891-ls0aku8qh33akrh8kujeiibitvih1jhq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_vY86MNWIj_bY-Onmei4Ywc6VEypundo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773156085891-ls0aku8qh33akrh8kujeiibitvih1jhq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
