@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import im.getsocial.sdk.GetSocial;
 
 public class IntroActivity extends Activity {
     private int[] layouts;
@@ -32,6 +34,10 @@ public class IntroActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
         ButterKnife.bind(this);
+
+       // String deviceId = GetSocial.Device.getIdentifier();
+
+       // Log.v("DeviceID" , GetSocial.Device.getIdentifier());
 
         tabLayout.setupWithViewPager(viewPager, true);
         layouts = new int[]{
