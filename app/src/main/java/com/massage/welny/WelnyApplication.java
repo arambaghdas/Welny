@@ -45,7 +45,6 @@ public class WelnyApplication extends Application {
                 Log.v("YandexMetrica", "onError: " + reason.name());
             }
         });
-
     }
 
     @Override
