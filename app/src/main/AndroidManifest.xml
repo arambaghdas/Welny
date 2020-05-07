@@ -16,6 +16,13 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="im.getsocial.sdk.NotificationIcon"
+            android:resource="@drawable/getsocial_notification_icon" />
+
+        <meta-data android:name="im.getsocial.sdk.NotificationColor" android:value="\#C86E00"/>
+
         <activity android:name="com.massage.welny.register.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
