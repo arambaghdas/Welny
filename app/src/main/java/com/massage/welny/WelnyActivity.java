@@ -179,6 +179,7 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
         currentFragment = new WebViewFragment();
         Bundle bundle = new Bundle();
         bundle.putString("link", Links.BOOKINGS_URL);
+        bundle.putString("title", getString(R.string.orders));
         bundle.putBoolean("auth", true);
         currentFragment.setArguments(bundle);
         String tag = "WebViewFragment";
@@ -276,6 +277,7 @@ public class WelnyActivity extends AppCompatActivity implements UserInfoView {
         if (requestCode == WEBVIEW_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             showOrders();
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }
