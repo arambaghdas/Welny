@@ -17,7 +17,7 @@ public class FileUtils {
     private static final int READ_BLOCK_SIZE = 100;
 
     public static void writeFileOnInternalStorage(Context mContext, String text){
-
+        /*
         File file = new File(mContext.getFilesDir(), "text");
         if (!file.exists()) {
             file.mkdir();
@@ -30,7 +30,7 @@ public class FileUtils {
             writer.flush();
             writer.close();
         } catch (Exception e) { }
-
+        */
     }
 
     public static ArrayList<String> readFromInternalStorage(Context mContext) {
