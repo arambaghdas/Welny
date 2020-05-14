@@ -20,6 +20,9 @@
         <meta-data
             android:name="im.getsocial.sdk.NotificationIcon"
             android:resource="@drawable/getsocial_notification_icon" />
+        <meta-data
+            android:name="im.getsocial.sdk.LargeNotificationIcon"
+            android:resource="@drawable/ic_large_notification_icon" />
 
         <meta-data android:name="im.getsocial.sdk.NotificationColor" android:value="\#C86E00"/>
 
