@@ -94,17 +94,6 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView, 
 
         webView.setWebViewClient(new WebViewClient(){
             @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon){
-                super.onPageStarted(view, url, favicon);
-            }
-
-            @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                Log.d("onConsoleMessage", "onReceivedSslError: " + error.getUrl());
-                handler.proceed();
-            }
-
-            @Override
             public void onPageFinished(WebView view, String url){
                 Log.d("onConsoleMessage", "onPageFinished: " + url);
                 super.onPageFinished(view, url);
