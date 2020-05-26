@@ -2,16 +2,12 @@ package com.massage.welny.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.http.SslError;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -28,7 +24,6 @@ import androidx.fragment.app.Fragment;
 
 import com.massage.welny.R;
 import com.massage.welny.WelnyActivity;
-import com.massage.welny.log.FileUtils;
 import com.massage.welny.presenter.GetUserInfoPresenter;
 import com.massage.welny.presenter.WebViewPresenter;
 import com.massage.welny.util.Analytics;
@@ -89,27 +84,15 @@ public class WebViewFragment extends Fragment implements UserInfoView, WebSiteVi
         webView.addJavascriptInterface(new WebAppInterface(mContext), "Android");
         webView.loadUrl(webViewPresenter.getUrl(link, auth));
 
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-                Log.d("onConsoleMessage", consoleMessage.message());
-                FileUtils.writeFileOnInternalStorage(mContext, consoleMessage.message());
-                return super.onConsoleMessage(consoleMessage);
-            }
-        });
-
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url){
-                Log.d("onConsoleMessage", "onPageFinished: " + url);
                 super.onPageFinished(view, url);
                 hideProgressBar();
-                FileUtils.writeFileOnInternalStorage(mContext, url);
             }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String url) {
-                Log.d("onConsoleMessage", "shouldOverrideUrlLoading: " + url);
                 webView.loadUrl(url);
                 return true;
             }

@@ -34,6 +34,7 @@ public class FileUtils {
     }
 
     public static ArrayList<String> readFromInternalStorage(Context mContext) {
+        /*
         ArrayList<String> stringArrayList = new ArrayList<>();
 
         File fileEvents = new File(mContext.getFilesDir()+"/text/sample");
@@ -55,6 +56,8 @@ public class FileUtils {
         Collections.reverse(stringArrayList1);
 
         return stringArrayList1;
+        */
+        return new ArrayList<>();
     }
 
 }

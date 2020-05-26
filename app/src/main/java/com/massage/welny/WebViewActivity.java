@@ -3,14 +3,9 @@ package com.massage.welny;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.http.SslError;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -21,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.massage.welny.log.FileUtils;
 import com.massage.welny.presenter.GetUserInfoPresenter;
 import com.massage.welny.presenter.WebViewPresenter;
 import com.massage.welny.register.VerifyPhoneActivity;
@@ -83,27 +77,15 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView, 
         String newURL = webViewPresenter.getUrl(link, auth);
         webView.loadUrl(newURL);
 
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-                Log.d("onConsoleMessage", consoleMessage.message());
-                FileUtils.writeFileOnInternalStorage(getBaseContext(), consoleMessage.message());
-                return super.onConsoleMessage(consoleMessage);
-            }
-        });
-
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url){
-                Log.d("onConsoleMessage", "onPageFinished: " + url);
                 super.onPageFinished(view, url);
                 hideProgressBar();
-                FileUtils.writeFileOnInternalStorage(getBaseContext(), url);
             }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String url) {
-                Log.d("onConsoleMessage", "shouldOverrideUrlLoading: " + url);
                 webView.loadUrl(url);
                 return true;
             }
