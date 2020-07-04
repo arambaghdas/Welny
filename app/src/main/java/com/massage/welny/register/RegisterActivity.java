@@ -125,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView,
 
     @Override
     public void showGetUserInfoSuccessResponse() {
-        Analytics.sendRegistrationCompletedEvent();
+        Analytics.sendRegistrationCompletedEvent(this);
         Intent intent = new Intent(this, WelnyActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

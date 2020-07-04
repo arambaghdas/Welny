@@ -31,7 +31,7 @@ public class MassageTypesFragment extends Fragment {
         ImageView imageViewType3 = view.findViewById(R.id.iv_massage_type3);
 
         imageViewType1.setOnClickListener(v -> {
-            Analytics.sendMainSingleEvent();
+            Analytics.sendMainSingleEvent(view.getContext());
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
             Bundle b1 = new Bundle();
             b1.putString("link", Links.SINGLE_ORDER_MASSAGE_URL);
@@ -41,7 +41,7 @@ public class MassageTypesFragment extends Fragment {
         });
 
         imageViewType2.setOnClickListener(v -> {
-            Analytics.sendMainDoubleEvent();
+            Analytics.sendMainDoubleEvent(view.getContext());
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
             Bundle b1 = new Bundle();
             b1.putString("link", Links.COUPLE_ORDER_MASSAGE_URL);

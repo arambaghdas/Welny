@@ -92,4 +92,7 @@
     <string name="user_confidential">политики конфиденциальности</string>
     <string name="promo_code_share">Ваш промо-код скопирован в буфер обмена</string>
     <string name="promo_code_invite_friend">удобное приложение для заказа качественного массажа на дом по доступным ценам. Промокод на скидку 300 рублей на первый заказ:</string>
-  </resources>
+    <string name="facebook_app_id">974232456383596</string>
+    <string name="fb_login_protocol_scheme">fb974232456383596</string>
+
+</resources>

@@ -1,11 +1,17 @@
 package com.massage.welny.util;
+import android.content.Context;
 import android.util.Log;
 import com.yandex.metrica.YandexMetrica;
+import com.facebook.appevents.AppEventsLogger;
 
 public class Analytics {
 
-    public static void sendMainSingleEvent() {
+    public static void sendMainSingleEvent(Context mContext) {
         YandexMetrica.reportEvent("main_single");
+
+        AppEventsLogger logger = AppEventsLogger.newLogger(mContext);
+        logger.logEvent("Add to basket");
+
         Log.v("Analytics", "main_single");
     }
 
@@ -14,8 +20,12 @@ public class Analytics {
         Log.v("Analytics", "get_code");
     }
 
-    public static void sendRegistrationCompletedEvent() {
+    public static void sendRegistrationCompletedEvent(Context mContext) {
         YandexMetrica.reportEvent("registration_completed");
+
+        AppEventsLogger logger = AppEventsLogger.newLogger(mContext);
+        logger.logEvent("Complete registration");
+
         Log.v("Analytics", "registration_completed");
     }
 
@@ -24,8 +34,12 @@ public class Analytics {
         Log.v("Analytics", "menu_orders");
     }
 
-    public static void sendRegistrationInitiatedEvent() {
+    public static void sendRegistrationInitiatedEvent(Context mContext) {
         YandexMetrica.reportEvent("registration_initiated");
+
+        AppEventsLogger logger = AppEventsLogger.newLogger(mContext);
+        logger.logEvent("Submit application");
+
         Log.v("Analytics", "registration_initiated");
     }
 
@@ -39,8 +53,12 @@ public class Analytics {
         Log.v("Analytics", "menu_welny+");
     }
 
-    public static void sendMainDoubleEvent() {
+    public static void sendMainDoubleEvent(Context mContext) {
         YandexMetrica.reportEvent("main_double");
+
+        AppEventsLogger logger = AppEventsLogger.newLogger(mContext);
+        logger.logEvent("Add to basket");
+
         Log.v("Analytics", "main_double");
     }
 
@@ -119,8 +137,12 @@ public class Analytics {
         Log.v("Analytics", "invite_copy");
     }
 
-    public static void sendOrderConfirmedEvent() {
+    public static void sendOrderConfirmedEvent(Context mContext) {
         YandexMetrica.reportEvent("order_confirmed");
+
+        AppEventsLogger logger = AppEventsLogger.newLogger(mContext);
+        logger.logEvent("Purchase");
+
         Log.v("Analytics", "order_confirmed");
     }
 

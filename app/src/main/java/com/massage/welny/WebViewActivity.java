@@ -174,7 +174,7 @@ public class WebViewActivity extends AppCompatActivity implements UserInfoView, 
 
         @JavascriptInterface
         public void bookingCreated() {
-            Analytics.sendOrderConfirmedEvent();
+            Analytics.sendOrderConfirmedEvent(mContext);
             getUserInfoPresenter.sendGetUserRequest();
             Intent output = new Intent();
             setResult(RESULT_OK, output);

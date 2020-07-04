@@ -55,7 +55,7 @@ public class IntroActivity extends Activity {
 
     @OnClick(R.id.tv_registration)
     public void openGetCodeActivity() {
-        Analytics.sendRegistrationInitiatedEvent();
+        Analytics.sendRegistrationInitiatedEvent(this);
         Preferences.setWelcomeScreenSeenState(this, false);
         Intent intent = new Intent(this, VerifyPhoneActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
